@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>deathmaze</name>
-  <url>http://maven.apache.org</url>
+  <url>http://github.com/medwards/deathmaze</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
