@@ -11,4 +11,4 @@ Test
 
 Run
 ---
-`CLASSPATH=target/classes java org.p_one.deathmaze.App`
+`CLASSPATH=target/classes java org.p_one.deathmaze.TerminalClient`
