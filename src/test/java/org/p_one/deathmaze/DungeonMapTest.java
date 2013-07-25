@@ -1,8 +1,6 @@
 package org.p_one.deathmaze;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.p_one.deathmaze.DungeonMap;
 
