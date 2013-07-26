@@ -15,23 +15,33 @@ public class TerminalClient {
 	public DungeonMap map;
 	public Screen screen;
 	public ScreenWriter writer;
+	public int x_radius, y_radius;
 
 	public TerminalClient() {
 		this.map = new DungeonMap();
 		Room aRoom = new Room(0, 0, true, true, true, true);
 		this.map.rooms.add(aRoom);
+		this.map.rooms.add(new Room(0, -1, false, false, true, false));
+		this.map.rooms.add(new Room(1, 0, false, true, false, true));
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
-
+		this.x_radius = 3;
+		this.y_radius = 1;
 	}
 
 	public void run() {
 		int x = 0, y = 0;
+	        int screen_x = this.x_radius * 5;
+		int screen_y = this.y_radius * 5;
 
 		this.screen.startScreen();
 		for(Room room : this.map.rooms) {
-			this.drawRoom(room, x, y);
+			if(this.isRoomOnField(room, x, y)) {
+				int room_screen_x = screen_x - ((x - room.x) * 5);
+				int room_screen_y = screen_y - ((y - room.y) * 5);
+				this.drawRoom(room, room_screen_x, room_screen_y);
+			}
 		}
 
 		this.screen.refresh();
@@ -40,6 +50,13 @@ public class TerminalClient {
 		} catch(InterruptedException e) {
 		}
 		this.screen.stopScreen();
+	}
+
+	public boolean isRoomOnField(Room room, int x, int y) {
+		if(room.x >= x - this.x_radius && room.x <= x + x_radius && room.y >= y - y_radius && room.y <= y + y_radius) {
+			return true;
+		}
+		return false;
 	}
 
 	public void drawRoom(Room room, int x, int y) {
