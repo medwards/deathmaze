@@ -13,7 +13,7 @@ public class DungeonMapTest extends TestCase {
 
 	public void testAddRoom() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(true, false, false, false);
+		Room room = new Room(0, 0, true, false, false, false);
 		map.rooms.add(room);
 		assertEquals(room, map.rooms.toArray()[0]);
 	}
