@@ -8,34 +8,53 @@ import org.p_one.deathmaze.Room;
 
 public class TerminalClient {
 	public static void main(String[] args) {
-		DungeonMap map = new DungeonMap();
+		TerminalClient client = new TerminalClient();
+		client.run();
+	}
+
+	public DungeonMap map;
+	public Screen screen;
+	public ScreenWriter writer;
+
+	public TerminalClient() {
+		this.map = new DungeonMap();
 		Room aRoom = new Room(true, true, true, true);
-		map.rooms.add(aRoom);
+		this.map.rooms.add(aRoom);
 
-		Screen screen = TerminalFacade.createScreen();
-		ScreenWriter writer = new ScreenWriter(screen);
+		this.screen = TerminalFacade.createScreen();
+		this.writer = new ScreenWriter(screen);
 
-		screen.startScreen();
-		for(Room room : map.rooms) {
-			writer.drawString(1, 1, "***");
-			writer.drawString(2, 1, "***");
-			writer.drawString(3, 1, "***");
-			if(room.north) {
-				writer.drawString(0, 2, "*");
-			}
-			if(room.east) {
-				writer.drawString(2, 4, "*");
-			}
-			if(room.south) {
-				writer.drawString(4, 2, "*");
-			}
-			if(room.west) {
-				writer.drawString(2, 0, "*");
-			}
+	}
+
+	public void run() {
+		this.screen.startScreen();
+		for(Room room : this.map.rooms) {
+			this.drawRoom(room);
 		}
 
-		screen.refresh();
-		screen.getTerminal().readInput();
-		screen.stopScreen();
+		this.screen.refresh();
+		try {
+			Thread.sleep(5000);
+		} catch(InterruptedException e) {
+		}
+		this.screen.stopScreen();
+	}
+
+	public void drawRoom(Room room) {
+		this.writer.drawString(1, 1, "***");
+		this.writer.drawString(1, 2, "***");
+		this.writer.drawString(1, 3, "***");
+		if(room.north) {
+			this.writer.drawString(0, 2, "*");
+		}
+		if(room.east) {
+			this.writer.drawString(2, 4, "*");
+		}
+		if(room.south) {
+			this.writer.drawString(4, 2, "*");
+		}
+		if(room.west) {
+			this.writer.drawString(2, 0, "*");
+		}
 	}
 }
