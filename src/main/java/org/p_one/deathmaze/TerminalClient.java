@@ -18,7 +18,7 @@ public class TerminalClient {
 
 	public TerminalClient() {
 		this.map = new DungeonMap();
-		Room aRoom = new Room(true, true, true, true);
+		Room aRoom = new Room(0, 0, true, true, true, true);
 		this.map.rooms.add(aRoom);
 
 		this.screen = TerminalFacade.createScreen();
@@ -27,9 +27,11 @@ public class TerminalClient {
 	}
 
 	public void run() {
+		int x = 0, y = 0;
+
 		this.screen.startScreen();
 		for(Room room : this.map.rooms) {
-			this.drawRoom(room);
+			this.drawRoom(room, x, y);
 		}
 
 		this.screen.refresh();
@@ -40,21 +42,21 @@ public class TerminalClient {
 		this.screen.stopScreen();
 	}
 
-	public void drawRoom(Room room) {
-		this.writer.drawString(1, 1, "***");
-		this.writer.drawString(1, 2, "***");
-		this.writer.drawString(1, 3, "***");
+	public void drawRoom(Room room, int x, int y) {
+		this.writer.drawString(x + 1, y + 1, "***");
+		this.writer.drawString(x + 1, y + 2, "***");
+		this.writer.drawString(x + 1, y + 3, "***");
 		if(room.north) {
-			this.writer.drawString(0, 2, "*");
+			this.writer.drawString(x + 0, y + 2, "*");
 		}
 		if(room.east) {
-			this.writer.drawString(2, 4, "*");
+			this.writer.drawString(x + 2, y + 4, "*");
 		}
 		if(room.south) {
-			this.writer.drawString(4, 2, "*");
+			this.writer.drawString(x + 4, y + 2, "*");
 		}
 		if(room.west) {
-			this.writer.drawString(2, 0, "*");
+			this.writer.drawString(x + 2, y + 0, "*");
 		}
 	}
 }
