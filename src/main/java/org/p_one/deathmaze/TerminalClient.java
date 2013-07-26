@@ -19,7 +19,7 @@ public class TerminalClient {
 	public Screen screen;
 	public ScreenWriter writer;
 	public int x, y;
-	public int x_radius, y_radius;
+	public int player_x, player_y;
 
 	public TerminalClient() {
 		this.map = new DungeonMap();
@@ -38,8 +38,10 @@ public class TerminalClient {
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
-		this.x = 0;
-		this.y = 0;
+		this.x = -3;
+		this.y = -3;
+		this.player_x = 0;
+		this.player_y = 0;
 	}
 
 	public void run() {
@@ -61,7 +63,7 @@ public class TerminalClient {
 		int y_offset = 0 - y;
 		for(Room room : this.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
-			if(room.x == x && room.y == y) {
+			if(room.x == player_x && room.y == player_y) {
 				color = Terminal.Color.YELLOW;
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
@@ -73,14 +75,22 @@ public class TerminalClient {
 	public void handleInput(Key input) {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
-		if(kind == Key.Kind.ArrowLeft || character == 'A') {
+		if(character == 'A') {
 			this.x--;
-		} else if(kind == Key.Kind.ArrowRight || character == 'D') {
+		} else if(character == 'D') {
 			this.x++;
-		} else if(kind == Key.Kind.ArrowUp || character == 'W') {
+		} else if(character == 'W') {
 			this.y--;
-		} else if(kind == Key.Kind.ArrowDown || character == 'S') {
+		} else if(character == 'S') {
 			this.y++;
+		} else if(kind == Key.Kind.ArrowDown) {
+			this.player_y++;
+		} else if(kind == Key.Kind.ArrowUp) {
+			this.player_y--;
+		} else if(kind == Key.Kind.ArrowLeft) {
+			this.player_x--;
+		} else if(kind == Key.Kind.ArrowRight) {
+			this.player_x++;
 		} else if(character == ' ') {
 			this.map.rooms.add(new Room(this.x, this.y, true, true, true, true));
 		}
