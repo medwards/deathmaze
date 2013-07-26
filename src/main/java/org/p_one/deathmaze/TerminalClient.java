@@ -51,15 +51,15 @@ public class TerminalClient {
 	        int screen_x = this.x_radius * 5;
 		int screen_y = this.y_radius * 5;
 		for(Room room : this.map.rooms) {
+			Terminal.Color color = Terminal.Color.WHITE;
 			if(room.x == x && room.y == y) {
-				this.writer.setForegroundColor(Terminal.Color.YELLOW);
+				color = Terminal.Color.YELLOW;
 			}
 			if(this.isRoomOnField(room, x, y)) {
 				int room_screen_x = screen_x - ((x - room.x) * 5);
 				int room_screen_y = screen_y - ((y - room.y) * 5);
-				this.drawRoom(room, room_screen_x, room_screen_y);
+				this.drawRoom(room, room_screen_x, room_screen_y, color);
 			}
-			this.writer.setForegroundColor(Terminal.Color.DEFAULT);
 		}
 
 		this.screen.refresh();
@@ -76,21 +76,23 @@ public class TerminalClient {
 		return false;
 	}
 
-	public void drawRoom(Room room, int x, int y) {
-		this.writer.drawString(x + 1, y + 1, "***");
-		this.writer.drawString(x + 1, y + 2, "***");
-		this.writer.drawString(x + 1, y + 3, "***");
+	public void drawRoom(Room room, int x, int y, Terminal.Color color) {
+		this.writer.setBackgroundColor(color);
+		this.writer.drawString(x + 1, y + 1, "   ");
+		this.writer.drawString(x + 1, y + 2, "   ");
+		this.writer.drawString(x + 1, y + 3, "   ");
 		if(room.north) {
-			this.writer.drawString(x + 2, y + 0, "*");
+			this.writer.drawString(x + 2, y + 0, " ");
 		}
 		if(room.east) {
-			this.writer.drawString(x + 4, y + 2, "*");
+			this.writer.drawString(x + 4, y + 2, " ");
 		}
 		if(room.south) {
-			this.writer.drawString(x + 2, y + 4, "*");
+			this.writer.drawString(x + 2, y + 4, " ");
 		}
 		if(room.west) {
-			this.writer.drawString(x + 0, y + 2, "*");
+			this.writer.drawString(x + 0, y + 2, " ");
 		}
+		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
 	}
 }
