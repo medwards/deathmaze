@@ -113,6 +113,8 @@ public class TerminalClient {
 			this.y--;
 		} else if(kind == Key.Kind.ArrowDown || character == 'S') {
 			this.y++;
+		} else if(character == ' ') {
+			this.map.rooms.add(new Room(this.x, this.y, true, true, true, true));
 		}
 	}
 
