@@ -6,7 +6,7 @@ because I need to talk to him anyways before this gets good.
 
 Build
 -----
-`mvn compile`
+`mvn package`
 
 Test
 ----
@@ -14,4 +14,5 @@ Test
 
 Run
 ---
-`CLASSPATH=target/classes java org.p_one.deathmaze.TerminalClient`
+`java -jar target/deathmaze-*.jar`
+> Maybe be careful of version numbers -.-
