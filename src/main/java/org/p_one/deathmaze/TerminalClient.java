@@ -2,6 +2,7 @@ package org.p_one.deathmaze;
 
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenWriter;
+import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.TerminalFacade;
 import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
@@ -37,11 +38,15 @@ public class TerminalClient {
 
 		this.screen.startScreen();
 		for(Room room : this.map.rooms) {
+			if(room.x == x && room.y == y) {
+				this.writer.setForegroundColor(Terminal.Color.YELLOW);
+			}
 			if(this.isRoomOnField(room, x, y)) {
 				int room_screen_x = screen_x - ((x - room.x) * 5);
 				int room_screen_y = screen_y - ((y - room.y) * 5);
 				this.drawRoom(room, room_screen_x, room_screen_y);
 			}
+			this.writer.setForegroundColor(Terminal.Color.DEFAULT);
 		}
 
 		this.screen.refresh();
