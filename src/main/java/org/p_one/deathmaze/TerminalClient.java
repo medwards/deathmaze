@@ -47,16 +47,16 @@ public class TerminalClient {
 		this.writer.drawString(x + 1, y + 2, "***");
 		this.writer.drawString(x + 1, y + 3, "***");
 		if(room.north) {
-			this.writer.drawString(x + 0, y + 2, "*");
+			this.writer.drawString(x + 2, y + 0, "*");
 		}
 		if(room.east) {
-			this.writer.drawString(x + 2, y + 4, "*");
-		}
-		if(room.south) {
 			this.writer.drawString(x + 4, y + 2, "*");
 		}
+		if(room.south) {
+			this.writer.drawString(x + 2, y + 4, "*");
+		}
 		if(room.west) {
-			this.writer.drawString(x + 2, y + 0, "*");
+			this.writer.drawString(x + 0, y + 2, "*");
 		}
 	}
 }
