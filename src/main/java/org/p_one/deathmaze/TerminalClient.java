@@ -27,6 +27,14 @@ public class TerminalClient {
 		this.map.rooms.add(aRoom);
 		this.map.rooms.add(new Room(0, -1, false, false, true, false));
 		this.map.rooms.add(new Room(1, 0, false, true, false, true));
+		this.map.rooms.add(new Room(0, 1, true, false, true, false));
+		this.map.rooms.add(new Room(0, 2, true, false, true, false));
+		this.map.rooms.add(new Room(0, 3, true, false, true, false));
+		this.map.rooms.add(new Room(0, 4, true, false, true, false));
+		this.map.rooms.add(new Room(0, 5, true, false, true, false));
+		this.map.rooms.add(new Room(0, 6, true, false, true, false));
+		this.map.rooms.add(new Room(0, 7, true, false, true, false));
+		this.map.rooms.add(new Room(0, 8, true, false, true, false));
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
