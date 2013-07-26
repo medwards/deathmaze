@@ -33,10 +33,23 @@ public class TerminalClient {
 
 	public void run() {
 		int x = 0, y = 0;
-	        int screen_x = this.x_radius * 5;
-		int screen_y = this.y_radius * 5;
 
 		this.screen.startScreen();
+		this.drawField(x, y);
+		y--;
+		this.drawField(x, y);
+		y++;
+		this.drawField(x, y);
+		x++;
+		this.drawField(x, y);
+
+		this.screen.stopScreen();
+	}
+
+	public void drawField(int x, int y) {
+		this.screen.clear();
+	        int screen_x = this.x_radius * 5;
+		int screen_y = this.y_radius * 5;
 		for(Room room : this.map.rooms) {
 			if(room.x == x && room.y == y) {
 				this.writer.setForegroundColor(Terminal.Color.YELLOW);
@@ -51,10 +64,9 @@ public class TerminalClient {
 
 		this.screen.refresh();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(1500);
 		} catch(InterruptedException e) {
 		}
-		this.screen.stopScreen();
 	}
 
 	public boolean isRoomOnField(Room room, int x, int y) {
