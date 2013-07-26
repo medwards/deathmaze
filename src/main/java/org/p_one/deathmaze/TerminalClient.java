@@ -69,14 +69,15 @@ public class TerminalClient {
 	}
 
 	public void handleInput(Key input) {
+		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
-		if(kind == Key.Kind.ArrowLeft) {
+		if(kind == Key.Kind.ArrowLeft || character == 'A') {
 			this.x--;
-		} else if(kind == Key.Kind.ArrowRight) {
+		} else if(kind == Key.Kind.ArrowRight || character == 'D') {
 			this.x++;
-		} else if(kind == Key.Kind.ArrowUp) {
+		} else if(kind == Key.Kind.ArrowUp || character == 'W') {
 			this.y--;
-		} else if(kind == Key.Kind.ArrowDown) {
+		} else if(kind == Key.Kind.ArrowDown || character == 'S') {
 			this.y++;
 		}
 	}
