@@ -4,6 +4,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenWriter;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
 import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
 
@@ -16,6 +17,7 @@ public class TerminalClient {
 	public DungeonMap map;
 	public Screen screen;
 	public ScreenWriter writer;
+	public int x, y;
 	public int x_radius, y_radius;
 
 	public TerminalClient() {
@@ -27,22 +29,23 @@ public class TerminalClient {
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
+		this.x = 0;
+		this.y = 0;
 		this.x_radius = 3;
 		this.y_radius = 1;
 	}
 
 	public void run() {
-		int x = 0, y = 0;
 
 		this.screen.startScreen();
-		this.drawField(x, y);
-		y--;
-		this.drawField(x, y);
-		y++;
-		this.drawField(x, y);
-		x++;
-		this.drawField(x, y);
-
+		Key key = null;
+		while(key == null || key.getKind() != Key.Kind.Escape) {
+			this.drawField(this.x, this.y);
+			key = this.screen.getTerminal().readInput();
+			if(key != null) {
+				this.handleInput(key);
+			}
+		}
 		this.screen.stopScreen();
 	}
 
@@ -63,9 +66,18 @@ public class TerminalClient {
 		}
 
 		this.screen.refresh();
-		try {
-			Thread.sleep(1500);
-		} catch(InterruptedException e) {
+	}
+
+	public void handleInput(Key input) {
+		Key.Kind kind = input.getKind();
+		if(kind == Key.Kind.ArrowLeft) {
+			this.x--;
+		} else if(kind == Key.Kind.ArrowRight) {
+			this.x++;
+		} else if(kind == Key.Kind.ArrowUp) {
+			this.y--;
+		} else if(kind == Key.Kind.ArrowDown) {
+			this.y++;
 		}
 	}
 
