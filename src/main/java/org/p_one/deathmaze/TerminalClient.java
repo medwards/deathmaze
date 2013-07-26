@@ -40,8 +40,6 @@ public class TerminalClient {
 		this.writer = new ScreenWriter(screen);
 		this.x = 0;
 		this.y = 0;
-		this.x_radius = 3;
-		this.y_radius = 1;
 	}
 
 	public void run() {
@@ -59,44 +57,14 @@ public class TerminalClient {
 
 	public void drawField(int x, int y) {
 		this.screen.clear();
-		TerminalSize size = this.screen.getTerminal().getTerminalSize();
-		int screen_x_slosh = size.getColumns() % 5;
-		int screen_y_slosh = size.getRows() % 5;
-
-		int x_extent = size.getColumns() / 5;
-		if(x_extent % 2 == 0) {
-			// this is the easiest way to accommodate the drawing
-			// loop. Probably time to ditch the list impl even
-			// if its for only an intermediate drawing 2d array
-			x_extent--;
-			screen_x_slosh += 5;
-		}
-		int y_extent = size.getRows() / 5;
-		if(y_extent % 2 == 0) {
-			y_extent--;
-			screen_y_slosh += 5;
-		}
-
-		this.x_radius = x_extent / 2;
-		this.y_radius = y_extent / 2;
-
-	        int screen_x = this.x_radius * 5 + screen_x_slosh / 2;
-		int screen_y = this.y_radius * 5 + screen_y_slosh / 2;
-
-
-
-
-
+		int x_offset = 0 - x;
+		int y_offset = 0 - y;
 		for(Room room : this.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
 			if(room.x == x && room.y == y) {
 				color = Terminal.Color.YELLOW;
 			}
-			if(this.isRoomOnField(room, x, y)) {
-				int room_screen_x = screen_x - ((x - room.x) * 5);
-				int room_screen_y = screen_y - ((y - room.y) * 5);
-				this.drawRoom(room, room_screen_x, room_screen_y, color);
-			}
+			this.drawRoom(room, x_offset, y_offset, color);
 		}
 
 		this.screen.refresh();
@@ -118,14 +86,9 @@ public class TerminalClient {
 		}
 	}
 
-	public boolean isRoomOnField(Room room, int x, int y) {
-		if(room.x >= x - this.x_radius && room.x <= x + x_radius && room.y >= y - y_radius && room.y <= y + y_radius) {
-			return true;
-		}
-		return false;
-	}
-
-	public void drawRoom(Room room, int x, int y, Terminal.Color color) {
+	public void drawRoom(Room room, int x_offset, int y_offset, Terminal.Color color) {
+		int x = (room.x + x_offset) * 5;
+		int y = (room.y + y_offset) * 5;
 		this.writer.setBackgroundColor(color);
 		this.writer.drawString(x + 1, y + 1, "   ");
 		this.writer.drawString(x + 1, y + 2, "   ");
