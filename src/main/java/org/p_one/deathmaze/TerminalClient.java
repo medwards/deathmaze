@@ -3,6 +3,7 @@ package org.p_one.deathmaze;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenWriter;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.TerminalSize;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import org.p_one.deathmaze.DungeonMap;
@@ -36,7 +37,6 @@ public class TerminalClient {
 	}
 
 	public void run() {
-
 		this.screen.startScreen();
 		Key key = null;
 		while(key == null || key.getKind() != Key.Kind.Escape) {
@@ -51,8 +51,34 @@ public class TerminalClient {
 
 	public void drawField(int x, int y) {
 		this.screen.clear();
-	        int screen_x = this.x_radius * 5;
-		int screen_y = this.y_radius * 5;
+		TerminalSize size = this.screen.getTerminal().getTerminalSize();
+		int screen_x_slosh = size.getColumns() % 5;
+		int screen_y_slosh = size.getRows() % 5;
+
+		int x_extent = size.getColumns() / 5;
+		if(x_extent % 2 == 0) {
+			// this is the easiest way to accommodate the drawing
+			// loop. Probably time to ditch the list impl even
+			// if its for only an intermediate drawing 2d array
+			x_extent--;
+			screen_x_slosh += 5;
+		}
+		int y_extent = size.getRows() / 5;
+		if(y_extent % 2 == 0) {
+			y_extent--;
+			screen_y_slosh += 5;
+		}
+
+		this.x_radius = x_extent / 2;
+		this.y_radius = y_extent / 2;
+
+	        int screen_x = this.x_radius * 5 + screen_x_slosh / 2;
+		int screen_y = this.y_radius * 5 + screen_y_slosh / 2;
+
+
+
+
+
 		for(Room room : this.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
 			if(room.x == x && room.y == y) {
