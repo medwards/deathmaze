@@ -8,4 +8,13 @@ public class DungeonMap {
 	public DungeonMap() {
 		this.rooms = new ArrayList();
 	}
+
+	public void add(Room newRoom) {
+		for(Room room : this.rooms) {
+			if(room.x == newRoom.x && room.y == newRoom.y) {
+				return;
+			}
+		}
+		this.rooms.add(newRoom);
+	}
 }

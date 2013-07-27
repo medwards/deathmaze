@@ -26,17 +26,17 @@ public class TerminalClient {
 	public TerminalClient() {
 		this.map = new DungeonMap();
 		Room aRoom = new Room(0, 0, true, true, true, true);
-		this.map.rooms.add(aRoom);
-		this.map.rooms.add(new Room(0, -1, false, false, true, false));
-		this.map.rooms.add(new Room(1, 0, false, true, false, true));
-		this.map.rooms.add(new Room(0, 1, true, false, true, false));
-		this.map.rooms.add(new Room(0, 2, true, false, true, false));
-		this.map.rooms.add(new Room(0, 3, true, false, true, false));
-		this.map.rooms.add(new Room(0, 4, true, false, true, false));
-		this.map.rooms.add(new Room(0, 5, true, false, true, false));
-		this.map.rooms.add(new Room(0, 6, true, false, true, false));
-		this.map.rooms.add(new Room(0, 7, true, false, true, false));
-		this.map.rooms.add(new Room(0, 8, true, false, true, false));
+		this.map.add(aRoom);
+		this.map.add(new Room(0, -1, false, false, true, false));
+		this.map.add(new Room(1, 0, false, true, false, true));
+		this.map.add(new Room(0, 1, true, false, true, false));
+		this.map.add(new Room(0, 2, true, false, true, false));
+		this.map.add(new Room(0, 3, true, false, true, false));
+		this.map.add(new Room(0, 4, true, false, true, false));
+		this.map.add(new Room(0, 5, true, false, true, false));
+		this.map.add(new Room(0, 6, true, false, true, false));
+		this.map.add(new Room(0, 7, true, false, true, false));
+		this.map.add(new Room(0, 8, true, false, true, false));
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
@@ -120,7 +120,7 @@ public class TerminalClient {
 			if(this.room_to_place == null) {
 				this.room_to_place = new Room(this.player_x, this.player_y, true, true, false, false);
 			} else {
-				this.map.rooms.add(room_to_place);
+				this.map.add(room_to_place);
 				this.room_to_place = null;
 			}
 		}
