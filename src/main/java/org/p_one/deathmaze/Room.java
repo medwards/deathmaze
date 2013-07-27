@@ -12,4 +12,12 @@ public class Room {
 		this.x = x;
 		this.y = y;
 	}
+
+	public void rotate() {
+		boolean old_west = this.west;
+		this.west = this.south;
+		this.south = this.east;
+		this.east = this.north;
+		this.north = old_west;
+	}
 }

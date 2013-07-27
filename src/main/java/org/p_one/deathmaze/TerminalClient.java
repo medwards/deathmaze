@@ -114,6 +114,8 @@ public class TerminalClient {
 			this.y--;
 		} else if(character == 'S') {
 			this.y++;
+		} else if(this.room_to_place != null && character == 'Z') {
+			this.room_to_place.rotate();
 		} else if(character == ' ') {
 			if(this.room_to_place == null) {
 				this.room_to_place = new Room(this.player_x, this.player_y, true, true, false, false);

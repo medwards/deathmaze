@@ -12,4 +12,13 @@ public class RoomTest extends TestCase {
 		assertEquals(room.south, false);
 		assertEquals(room.west, false);
 	}
+
+	public void testRotate() {
+		Room room = new Room(0, 0, true, false, false, true);
+		room.rotate();
+		assertEquals(room.north, true);
+		assertEquals(room.east, true);
+		assertEquals(room.south, false);
+		assertEquals(room.west, false);
+	}
 }
