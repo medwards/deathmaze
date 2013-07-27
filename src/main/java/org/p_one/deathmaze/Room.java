@@ -1,5 +1,7 @@
 package org.p_one.deathmaze;
 
+import org.p_one.deathmaze.InvalidRoomConnection;
+
 public class Room {
 	public boolean north, east, south, west;
 	public int x, y;
@@ -21,20 +23,29 @@ public class Room {
 		this.north = old_west;
 	}
 
-	public boolean connected(Room otherRoom) {
+	public boolean connected(Room otherRoom) throws InvalidRoomConnection{
 		int xDiff = this.x - otherRoom.x;
 		int yDiff = this.y - otherRoom.y;
 
+		boolean myExit = false, otherExit = false;
+
 		if(yDiff == -1) {
-			return this.south && otherRoom.north;
+			myExit = this.south;
+			otherExit = this.north;
 		} else if(yDiff == 1) {
-			return this.north && otherRoom.south;
+			myExit = this.north;
+			otherExit = otherRoom.south;
 		} else if(xDiff == -1) {
-			return this.east && otherRoom.west;
+			myExit = this.east;
+			otherExit = otherRoom.west;
 		} else if(xDiff == 1) {
-			return this.west && otherRoom.east;
+			myExit = this.west;
+			otherExit = otherRoom.east;
 		}
 
-		return false;
+		if(myExit != otherExit) {
+			throw new InvalidRoomConnection();
+		}
+		return myExit && otherExit;
 	}
 }

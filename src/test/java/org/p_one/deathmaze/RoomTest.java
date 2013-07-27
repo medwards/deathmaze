@@ -22,19 +22,28 @@ public class RoomTest extends TestCase {
 		assertEquals(room.west, false);
 	}
 
-	public void testConnected() {
+	public void testConnected() throws InvalidRoomConnection {
 		Room room = new Room(0, 0, true, false, false, false);
 		Room north_room = new Room(0, -1, false, false, true, false);
 
 		assertTrue(room.connected(north_room));
 	}
 
-	public void testNotConnected() {
+	public void testNotConnected() throws InvalidRoomConnection {
 		Room room = new Room(0, 0, false, false, false, false);
-		Room north_room = new Room(0, -1, false, false, true, false);
 		Room south_room = new Room(0, 1, false, false, false, false);
 
-		assertFalse(room.connected(north_room));
 		assertFalse(room.connected(south_room));
+	}
+
+	public void testBrokenConnectionRaisesException() {
+		Room room = new Room(0, 0, false, false, false, false);
+		Room north_room = new Room(0, -1, false, false, true, false);
+
+		try {
+			room.connected(north_room);
+			fail();
+		} catch(InvalidRoomConnection e) {
+		}
 	}
 }
