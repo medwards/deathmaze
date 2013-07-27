@@ -20,6 +20,8 @@ public class TerminalClient {
 	public ScreenWriter writer;
 	public int x, y;
 	public int player_x, player_y;
+	public int highlight_x, highlight_y;
+	public boolean cursor;
 
 	public TerminalClient() {
 		this.map = new DungeonMap();
@@ -42,6 +44,9 @@ public class TerminalClient {
 		this.y = -3;
 		this.player_x = 0;
 		this.player_y = 0;
+		this.highlight_x = 0;
+		this.highlight_y = 0;
+		this.cursor = false;
 	}
 
 	public void run() {
@@ -61,6 +66,9 @@ public class TerminalClient {
 		this.screen.clear();
 		int x_offset = 0 - x;
 		int y_offset = 0 - y;
+		if(this.cursor) {
+			this.drawHighlight(x_offset, y_offset);
+		}
 		for(Room room : this.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
 			if(room.x == player_x && room.y == player_y) {
@@ -76,13 +84,29 @@ public class TerminalClient {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
 		if(kind == Key.Kind.ArrowDown) {
-			this.player_y++;
+			if(cursor) {
+				this.highlight_y++;
+			} else {
+				this.player_y++;
+			}
 		} else if(kind == Key.Kind.ArrowUp) {
-			this.player_y--;
+			if(cursor) {
+				this.highlight_y--;
+			} else {
+				this.player_y--;
+			}
 		} else if(kind == Key.Kind.ArrowLeft) {
-			this.player_x--;
+			if(cursor) {
+				this.highlight_x--;
+			} else {
+				this.player_x--;
+			}
 		} else if(kind == Key.Kind.ArrowRight) {
-			this.player_x++;
+			if(cursor) {
+				this.highlight_x++;
+			} else {
+				this.player_x++;
+			}
 		} else if(character == 'A') {
 			this.x--;
 		} else if(character == 'D') {
@@ -92,8 +116,23 @@ public class TerminalClient {
 		} else if(character == 'S') {
 			this.y++;
 		} else if(character == ' ') {
-			this.map.rooms.add(new Room(this.x, this.y, true, true, true, true));
+			this.cursor = !this.cursor;
+			this.highlight_x = player_x;
+			this.highlight_y = player_y;
 		}
+	}
+
+	public void drawHighlight(int x_offset, int y_offset) {
+		this.writer.setBackgroundColor(Terminal.Color.MAGENTA);
+		int x, y;
+		x = (highlight_x + x_offset) * 5;
+		y = (highlight_y + y_offset) * 5;
+		this.writer.drawString(x, y, "     ");
+		this.writer.drawString(x, y + 1, "     ");
+		this.writer.drawString(x, y + 2, "     ");
+		this.writer.drawString(x, y + 3, "     ");
+		this.writer.drawString(x, y + 4, "     ");
+		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
 	}
 
 	public void drawRoom(Room room, int x_offset, int y_offset, Terminal.Color color) {
