@@ -20,4 +20,21 @@ public class Room {
 		this.east = this.north;
 		this.north = old_west;
 	}
+
+	public boolean connected(Room otherRoom) {
+		int xDiff = this.x - otherRoom.x;
+		int yDiff = this.y - otherRoom.y;
+
+		if(yDiff == -1) {
+			return this.south && otherRoom.north;
+		} else if(yDiff == 1) {
+			return this.north && otherRoom.south;
+		} else if(xDiff == -1) {
+			return this.east && otherRoom.west;
+		} else if(xDiff == 1) {
+			return this.west && otherRoom.east;
+		}
+
+		return false;
+	}
 }
