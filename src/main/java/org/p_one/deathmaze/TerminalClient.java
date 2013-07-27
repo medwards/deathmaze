@@ -21,7 +21,7 @@ public class TerminalClient {
 	public int x, y;
 	public int player_x, player_y;
 	public int highlight_x, highlight_y;
-	public boolean cursor;
+	public Room room_to_place;
 
 	public TerminalClient() {
 		this.map = new DungeonMap();
@@ -44,9 +44,7 @@ public class TerminalClient {
 		this.y = -3;
 		this.player_x = 0;
 		this.player_y = 0;
-		this.highlight_x = 0;
-		this.highlight_y = 0;
-		this.cursor = false;
+		this.room_to_place = null;
 	}
 
 	public void run() {
@@ -66,15 +64,16 @@ public class TerminalClient {
 		this.screen.clear();
 		int x_offset = 0 - x;
 		int y_offset = 0 - y;
-		if(this.cursor) {
-			this.drawHighlight(x_offset, y_offset);
-		}
 		for(Room room : this.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
 			if(room.x == player_x && room.y == player_y) {
 				color = Terminal.Color.YELLOW;
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
+		}
+		if(this.room_to_place != null) {
+			this.drawHighlight(x_offset, y_offset);
+			this.drawRoom(this.room_to_place, x_offset, y_offset, Terminal.Color.RED);
 		}
 
 		this.screen.refresh();
@@ -84,26 +83,26 @@ public class TerminalClient {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
 		if(kind == Key.Kind.ArrowDown) {
-			if(cursor) {
-				this.highlight_y++;
+			if(this.room_to_place != null) {
+				this.room_to_place.y++;
 			} else {
 				this.player_y++;
 			}
 		} else if(kind == Key.Kind.ArrowUp) {
-			if(cursor) {
-				this.highlight_y--;
+			if(this.room_to_place != null) {
+				this.room_to_place.y--;
 			} else {
 				this.player_y--;
 			}
 		} else if(kind == Key.Kind.ArrowLeft) {
-			if(cursor) {
-				this.highlight_x--;
+			if(this.room_to_place != null) {
+				this.room_to_place.x--;
 			} else {
 				this.player_x--;
 			}
 		} else if(kind == Key.Kind.ArrowRight) {
-			if(cursor) {
-				this.highlight_x++;
+			if(this.room_to_place != null) {
+				this.room_to_place.x++;
 			} else {
 				this.player_x++;
 			}
@@ -116,17 +115,20 @@ public class TerminalClient {
 		} else if(character == 'S') {
 			this.y++;
 		} else if(character == ' ') {
-			this.cursor = !this.cursor;
-			this.highlight_x = player_x;
-			this.highlight_y = player_y;
+			if(this.room_to_place == null) {
+				this.room_to_place = new Room(this.player_x, this.player_y, true, true, false, false);
+			} else {
+				this.map.rooms.add(room_to_place);
+				this.room_to_place = null;
+			}
 		}
 	}
 
 	public void drawHighlight(int x_offset, int y_offset) {
 		this.writer.setBackgroundColor(Terminal.Color.MAGENTA);
 		int x, y;
-		x = (highlight_x + x_offset) * 5;
-		y = (highlight_y + y_offset) * 5;
+		x = (room_to_place.x + x_offset) * 5;
+		y = (room_to_place.y + y_offset) * 5;
 		this.writer.drawString(x, y, "     ");
 		this.writer.drawString(x, y + 1, "     ");
 		this.writer.drawString(x, y + 2, "     ");
