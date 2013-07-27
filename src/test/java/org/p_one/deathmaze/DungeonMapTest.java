@@ -71,4 +71,17 @@ public class DungeonMapTest extends TestCase {
 		assertFalse(map.validRoom(not_adj_room));
 	}
 
+	public void testValidRoomMustConnect() {
+		DungeonMap map = new DungeonMap();
+		Room room = new Room(0, 0, true, false, true, false);
+		map.add(room);
+
+		Room connects_room = new Room(0, 1, true, false, false, false);
+		Room breaks_connection_room = new Room(-1, 0, false, true, false, false);
+		Room not_connected_room = new Room(1, 0, true, false, true, false);
+
+		assertTrue(map.validRoom(connects_room));
+		assertFalse(map.validRoom(not_connected_room));
+		assertFalse(map.validRoom(breaks_connection_room));
+	}
 }

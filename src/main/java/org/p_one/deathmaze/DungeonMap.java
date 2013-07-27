@@ -2,6 +2,7 @@ package org.p_one.deathmaze;
 
 import java.util.ArrayList;
 import org.p_one.deathmaze.Room;
+import org.p_one.deathmaze.InvalidRoomConnection;
 
 public class DungeonMap {
 	public ArrayList<Room> rooms;
@@ -16,8 +17,8 @@ public class DungeonMap {
 	}
 
 	public boolean validRoom(Room newRoom) {
-		boolean adjacentToSomething = false;
-		if(this.rooms.size() == 0) { adjacentToSomething = true; }
+		boolean connectedToSomething = false;
+		if(this.rooms.size() == 0) { connectedToSomething = true; }
 		for(Room room : this.rooms) {
 			if(room.x == newRoom.x && room.y == newRoom.y) {
 				return false;
@@ -25,11 +26,15 @@ public class DungeonMap {
 			int xDiff = Math.abs(room.x - newRoom.x);
 			int yDiff = Math.abs(room.y - newRoom.y);
 			int totalDiff = xDiff + yDiff;
-			if(totalDiff == 1) {
-				adjacentToSomething = true;
+			try {
+				if(totalDiff == 1 && newRoom.connected(room)) {
+					connectedToSomething = true;
+				}
+			} catch(InvalidRoomConnection e) {
+				return false;
 			}
 		}
-		if(!adjacentToSomething) {
+		if(!connectedToSomething) {
 			return false;
 		}
 		return true;
