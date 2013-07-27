@@ -73,7 +73,8 @@ public class TerminalClient {
 		}
 		if(this.room_to_place != null) {
 			this.drawHighlight(x_offset, y_offset);
-			this.drawRoom(this.room_to_place, x_offset, y_offset, Terminal.Color.RED);
+			Terminal.Color color = this.map.validRoom(this.room_to_place) ? Terminal.Color.GREEN : Terminal.Color.RED;
+			this.drawRoom(this.room_to_place, x_offset, y_offset, color);
 		}
 
 		this.screen.refresh();
