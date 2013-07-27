@@ -11,6 +11,8 @@ public class DungeonMapTest extends TestCase {
 		assertNotNull(map.rooms);
 	}
 
+	// A lot of these are essentially DungeonMap.validRoom tests, need to
+	// figure out mocking and just do this once
 	public void testAddRoomToEmptyMap() {
 		DungeonMap map = new DungeonMap();
 		Room room = new Room(0, 0, true, false, false, false);
@@ -40,4 +42,33 @@ public class DungeonMapTest extends TestCase {
 		assertTrue(map.rooms.contains(adjacent_room));
 		assertFalse(map.rooms.contains(not_adj_room));
 	}
+
+	public void testValidRoomInEmptyMap() {
+		DungeonMap map = new DungeonMap();
+		Room room = new Room(0, 0, true, false, false, false);
+		assertTrue(map.validRoom(room));
+	}
+
+	public void testValidRoomMustHaveUniqueCoords() {
+		DungeonMap map = new DungeonMap();
+		Room room = new Room(0, 0, true, false, false, false);
+		map.add(room);
+
+		Room room2 = new Room(0, 0, true, false, false, false);
+
+		assertFalse(map.validRoom(room2));
+	}
+
+	public void testValidRoomMustBeAdjacent() {
+		DungeonMap map = new DungeonMap();
+		Room room = new Room(0, 0, true, true, true, true);
+		map.add(room);
+
+		Room adjacent_room = new Room(0, 1, true, true, true, true);
+		Room not_adj_room = new Room(0, 6, true, true, true, true);
+
+		assertTrue(map.validRoom(adjacent_room));
+		assertFalse(map.validRoom(not_adj_room));
+	}
+
 }

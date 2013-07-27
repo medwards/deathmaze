@@ -10,11 +10,17 @@ public class DungeonMap {
 	}
 
 	public void add(Room newRoom) {
+		if(this.validRoom(newRoom)) {
+			this.rooms.add(newRoom);
+		}
+	}
+
+	public boolean validRoom(Room newRoom) {
 		boolean adjacentToSomething = false;
 		if(this.rooms.size() == 0) { adjacentToSomething = true; }
 		for(Room room : this.rooms) {
 			if(room.x == newRoom.x && room.y == newRoom.y) {
-				return;
+				return false;
 			}
 			int xDiff = Math.abs(room.x - newRoom.x);
 			int yDiff = Math.abs(room.y - newRoom.y);
@@ -24,8 +30,8 @@ public class DungeonMap {
 			}
 		}
 		if(!adjacentToSomething) {
-			return;
+			return false;
 		}
-		this.rooms.add(newRoom);
+		return true;
 	}
 }
