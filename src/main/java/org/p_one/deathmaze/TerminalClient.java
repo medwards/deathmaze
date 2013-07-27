@@ -75,15 +75,7 @@ public class TerminalClient {
 	public void handleInput(Key input) {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
-		if(character == 'A') {
-			this.x--;
-		} else if(character == 'D') {
-			this.x++;
-		} else if(character == 'W') {
-			this.y--;
-		} else if(character == 'S') {
-			this.y++;
-		} else if(kind == Key.Kind.ArrowDown) {
+		if(kind == Key.Kind.ArrowDown) {
 			this.player_y++;
 		} else if(kind == Key.Kind.ArrowUp) {
 			this.player_y--;
@@ -91,6 +83,14 @@ public class TerminalClient {
 			this.player_x--;
 		} else if(kind == Key.Kind.ArrowRight) {
 			this.player_x++;
+		} else if(character == 'A') {
+			this.x--;
+		} else if(character == 'D') {
+			this.x++;
+		} else if(character == 'W') {
+			this.y--;
+		} else if(character == 'S') {
+			this.y++;
 		} else if(character == ' ') {
 			this.map.rooms.add(new Room(this.x, this.y, true, true, true, true));
 		}
