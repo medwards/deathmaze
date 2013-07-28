@@ -49,4 +49,26 @@ public class RoomTest extends TestCase {
 		} catch(InvalidRoomConnection e) {
 		}
 	}
+
+	public void testLegalWhenConnected() {
+		Room room = new Room(0, 0, true, false, false, false);
+		Room north_room = new Room(0, -1, false, false, true, false);
+
+		assertTrue(room.legal(north_room));
+		assertTrue(north_room.legal(room));
+	}
+
+	public void testLegalWhenUnconnected() {
+		Room room = new Room(0, 0, true, false, false, false);
+		Room south_room = new Room(0, 1, false, false, false, false);
+
+		assertTrue(room.legal(south_room));
+	}
+
+	public void testNotLegalWhenOneSideConnected() {
+		Room room = new Room(0, 0, true, false, false, false);
+		Room south_room = new Room(0, 1, true, false, false, false);
+
+		assertFalse(room.legal(south_room));
+	}
 }

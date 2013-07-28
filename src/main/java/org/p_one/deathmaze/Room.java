@@ -51,4 +51,33 @@ public class Room {
 		}
 		return myExit && otherExit;
 	}
+
+	public boolean legal(Room otherRoom) {
+		// intended to relieve the overloading of connected, but the
+		// name sucks. Used to detect broken connections (which would
+		// otherwise return false in connected)
+		int xDiff = this.x - otherRoom.x;
+		int yDiff = this.y - otherRoom.y;
+		if(Math.abs(xDiff) + Math.abs(yDiff) != 1) {
+			return false;
+		}
+
+		boolean myExit = false, otherExit = false;
+
+		if(yDiff == -1) {
+			myExit = this.south;
+			otherExit = otherRoom.north;
+		} else if(yDiff == 1) {
+			myExit = this.north;
+			otherExit = otherRoom.south;
+		} else if(xDiff == -1) {
+			myExit = this.east;
+			otherExit = otherRoom.west;
+		} else if(xDiff == 1) {
+			myExit = this.west;
+			otherExit = otherRoom.east;
+		}
+
+		return myExit == otherExit;
+	}
 }
