@@ -34,4 +34,30 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.player_x);
 		assertEquals(0, game.player_y);
 	}
+
+	public void testMoveBlocked() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
+
+		game.moveNorth();
+		game.moveEast();
+		game.moveSouth();
+		game.moveWest();
+
+		assertEquals(0, game.player_x);
+		assertEquals(0, game.player_y);
+	}
+
+	public void testMoveOffBoard() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Room.Exit.DOOR, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
+
+		game.moveNorth();
+
+		assertEquals(0, game.player_x);
+		assertEquals(-1, game.player_y);
+		assertNotNull(game.roomToPlace);
+		assertEquals(0, game.roomToPlace.x);
+		assertEquals(-1, game.roomToPlace.y);
+	}
 }
