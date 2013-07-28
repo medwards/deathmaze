@@ -4,8 +4,8 @@ DEATHMAZE
 Instructions
 ------------
 Escape to quit. WASD to move the map, arrow keys to move the 'player'
-(position is indicated in yellow). Spacebar switches to room placement mode,
-arrow keys move the room, Z rotates it, spacebar again will place the room.
+(position is indicated in yellow). Moving out of the maze produces an new
+room, Z rotates it, and spacebar will place the room.
 
 Credits
 -------
