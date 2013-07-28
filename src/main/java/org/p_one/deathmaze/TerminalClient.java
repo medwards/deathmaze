@@ -15,35 +15,30 @@ public class TerminalClient {
 		client.run();
 	}
 
-	public DungeonMap map;
+	private Game gameState;
 	public Screen screen;
 	public ScreenWriter writer;
 	public int x, y;
-	public int player_x, player_y;
-	public Room room_to_place;
 
 	public TerminalClient() {
-		this.map = new DungeonMap();
+		this.gameState = new Game();
 		Room aRoom = new Room(0, 0, true, true, true, true);
-		this.map.add(aRoom);
-		this.map.add(new Room(0, -1, false, false, true, false));
-		this.map.add(new Room(1, 0, false, true, false, true));
-		this.map.add(new Room(0, 1, true, false, true, false));
-		this.map.add(new Room(0, 2, true, false, true, false));
-		this.map.add(new Room(0, 3, true, false, true, false));
-		this.map.add(new Room(0, 4, true, false, true, false));
-		this.map.add(new Room(0, 5, true, false, true, false));
-		this.map.add(new Room(0, 6, true, false, true, false));
-		this.map.add(new Room(0, 7, true, false, true, false));
-		this.map.add(new Room(0, 8, true, false, true, false));
+		this.gameState.map.add(aRoom);
+		this.gameState.map.add(new Room(0, -1, false, false, true, false));
+		this.gameState.map.add(new Room(1, 0, false, true, false, true));
+		this.gameState.map.add(new Room(0, 1, true, false, true, false));
+		this.gameState.map.add(new Room(0, 2, true, false, true, false));
+		this.gameState.map.add(new Room(0, 3, true, false, true, false));
+		this.gameState.map.add(new Room(0, 4, true, false, true, false));
+		this.gameState.map.add(new Room(0, 5, true, false, true, false));
+		this.gameState.map.add(new Room(0, 6, true, false, true, false));
+		this.gameState.map.add(new Room(0, 7, true, false, true, false));
+		this.gameState.map.add(new Room(0, 8, true, false, true, false));
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
 		this.x = -3;
 		this.y = -3;
-		this.player_x = 0;
-		this.player_y = 0;
-		this.room_to_place = null;
 	}
 
 	public void run() {
@@ -63,17 +58,17 @@ public class TerminalClient {
 		this.screen.clear();
 		int x_offset = 0 - x;
 		int y_offset = 0 - y;
-		for(Room room : this.map.rooms) {
+		for(Room room : this.gameState.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
-			if(room.x == player_x && room.y == player_y) {
+			if(room.x == this.gameState.player_x && room.y == this.gameState.player_y) {
 				color = Terminal.Color.YELLOW;
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
 		}
-		if(this.room_to_place != null) {
+		if(this.gameState.roomToPlace != null) {
 			this.drawHighlight(x_offset, y_offset);
-			Terminal.Color color = this.map.validRoom(this.room_to_place) ? Terminal.Color.GREEN : Terminal.Color.RED;
-			this.drawRoom(this.room_to_place, x_offset, y_offset, color);
+			Terminal.Color color = this.gameState.map.validRoom(this.gameState.roomToPlace) ? Terminal.Color.GREEN : Terminal.Color.RED;
+			this.drawRoom(this.gameState.roomToPlace, x_offset, y_offset, color);
 		}
 
 		this.screen.refresh();
@@ -83,22 +78,22 @@ public class TerminalClient {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
 		if(kind == Key.Kind.ArrowDown) {
-			if(this.room_to_place == null) {
+			if(this.gameState.roomToPlace == null) {
 				this.moveSouth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowUp) {
-			if(this.room_to_place == null) {
+			if(this.gameState.roomToPlace == null) {
 				this.moveNorth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowLeft) {
-			if(this.room_to_place == null) {
+			if(this.gameState.roomToPlace == null) {
 				this.moveWest();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowRight) {
-			if(this.room_to_place == null) {
+			if(this.gameState.roomToPlace == null) {
 				this.moveEast();
 			}
 			this.forceFieldToCursor();
@@ -110,12 +105,12 @@ public class TerminalClient {
 			this.y--;
 		} else if(character == 'S') {
 			this.y++;
-		} else if(this.room_to_place != null && character == 'Z') {
-			this.room_to_place.rotate();
+		} else if(this.gameState.roomToPlace != null && character == 'Z') {
+			this.gameState.roomToPlace.rotate();
 		} else if(character == ' ') {
-			if(this.room_to_place != null) {
-				this.map.add(room_to_place);
-				this.room_to_place = null;
+			if(this.gameState.roomToPlace != null) {
+				this.gameState.map.add(this.gameState.roomToPlace);
+				this.gameState.roomToPlace = null;
 			}
 		}
 	}
@@ -137,27 +132,27 @@ public class TerminalClient {
 	}
 
 	private void move(int x_delta, int y_delta) {
-		Room current = this.map.getRoom(this.player_x, this.player_y);
-		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
+		Room current = this.gameState.map.getRoom(this.gameState.player_x, this.gameState.player_y);
+		Room proposed = this.gameState.map.getRoom(this.gameState.player_x + x_delta, this.gameState.player_y + y_delta);
 
 		if(proposed == null) {
-			this.room_to_place = new Room(this.player_x + x_delta, this.player_y + y_delta);
-			this.player_x += x_delta;
-			this.player_y += y_delta;
+			this.gameState.roomToPlace = new Room(this.gameState.player_x + x_delta, this.gameState.player_y + y_delta);
+			this.gameState.player_x += x_delta;
+			this.gameState.player_y += y_delta;
 		} else if(current != null && current.connected(proposed)) {
-				this.player_x += x_delta;
-				this.player_y += y_delta;
+				this.gameState.player_x += x_delta;
+				this.gameState.player_y += y_delta;
 		}
 	}
 
 	private void forceFieldToCursor() {
 		int cursor_x = 0, cursor_y = 0;
-		if(this.room_to_place != null) {
-			cursor_x = this.room_to_place.x;
-			cursor_y = this.room_to_place.y;
+		if(this.gameState.roomToPlace != null) {
+			cursor_x = this.gameState.roomToPlace.x;
+			cursor_y = this.gameState.roomToPlace.y;
 		} else {
-			cursor_x = this.player_x;
-			cursor_y = this.player_y;
+			cursor_x = this.gameState.player_x;
+			cursor_y = this.gameState.player_y;
 		}
 
 		int x_offset = 0 - this.x;
@@ -184,8 +179,8 @@ public class TerminalClient {
 	public void drawHighlight(int x_offset, int y_offset) {
 		this.writer.setBackgroundColor(Terminal.Color.MAGENTA);
 		int x, y;
-		x = (room_to_place.x + x_offset) * 5;
-		y = (room_to_place.y + y_offset) * 5;
+		x = (this.gameState.roomToPlace.x + x_offset) * 5;
+		y = (this.gameState.roomToPlace.y + y_offset) * 5;
 		this.writer.drawString(x, y, "     ");
 		this.writer.drawString(x, y + 1, "     ");
 		this.writer.drawString(x, y + 2, "     ");
