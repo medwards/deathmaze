@@ -1,9 +1,21 @@
 package org.p_one.deathmaze;
 
+import java.util.Random;
+
 public class Room {
 	public boolean north, east, south, west;
 	public int x, y;
+
+	public Room(int x, int y) {
+		Random generator = new Random();
+		this.setup(x, y, generator.nextBoolean(), generator.nextBoolean(), generator.nextBoolean(), generator.nextBoolean());
+	}
+
 	public Room(int x, int y, boolean north, boolean east, boolean south, boolean west) {
+		this.setup(x, y, north, east, south, west);
+	}
+
+	private void setup(int x, int y, boolean north, boolean east, boolean south, boolean west) {
 		this.north = north;
 		this.east = east;
 		this.south = south;

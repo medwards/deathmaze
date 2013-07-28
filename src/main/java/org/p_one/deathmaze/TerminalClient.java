@@ -123,7 +123,7 @@ public class TerminalClient {
 			this.room_to_place.rotate();
 		} else if(character == ' ') {
 			if(this.room_to_place == null) {
-				this.room_to_place = new Room(this.player_x, this.player_y, true, true, false, false);
+				this.room_to_place = new Room(this.player_x, this.player_y);
 			} else {
 				this.map.add(room_to_place);
 				this.room_to_place = null;
