@@ -27,6 +27,7 @@ public class RoomTest extends TestCase {
 		Room north_room = new Room(0, -1, false, false, true, false);
 
 		assertTrue(room.connected(north_room));
+		assertTrue(north_room.connected(room));
 	}
 
 	public void testNotConnected() throws InvalidRoomConnection {

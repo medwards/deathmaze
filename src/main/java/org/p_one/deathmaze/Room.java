@@ -31,7 +31,7 @@ public class Room {
 
 		if(yDiff == -1) {
 			myExit = this.south;
-			otherExit = this.north;
+			otherExit = otherRoom.north;
 		} else if(yDiff == 1) {
 			myExit = this.north;
 			otherExit = otherRoom.south;
