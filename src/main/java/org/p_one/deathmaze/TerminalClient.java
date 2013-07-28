@@ -99,8 +99,12 @@ public class TerminalClient {
 			this.gameState.roomToPlace.rotate();
 		} else if(character == ' ') {
 			if(this.gameState.roomToPlace != null) {
-				this.gameState.map.add(this.gameState.roomToPlace);
-				this.gameState.roomToPlace = null;
+				if(this.gameState.map.validRoom(this.gameState.roomToPlace)) {
+					this.gameState.map.add(this.gameState.roomToPlace);
+					this.gameState.roomToPlace = null;
+				} else {
+					this.gameState.roomToPlace = new Room(this.gameState.roomToPlace.x, this.gameState.roomToPlace.y);
+				}
 			}
 		}
 	}
