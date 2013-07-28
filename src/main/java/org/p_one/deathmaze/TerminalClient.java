@@ -89,24 +89,28 @@ public class TerminalClient {
 			} else {
 				this.moveSouth();
 			}
+			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowUp) {
 			if(this.room_to_place != null) {
 				this.room_to_place.y--;
 			} else {
 				this.moveNorth();
 			}
+			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowLeft) {
 			if(this.room_to_place != null) {
 				this.room_to_place.x--;
 			} else {
 				this.moveWest();
 			}
+			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowRight) {
 			if(this.room_to_place != null) {
 				this.room_to_place.x++;
 			} else {
 				this.moveEast();
 			}
+			this.forceFieldToCursor();
 		} else if(character == 'A') {
 			this.x--;
 		} else if(character == 'D') {
@@ -153,6 +157,36 @@ public class TerminalClient {
 		}
 	}
 
+	private void forceFieldToCursor() {
+		int cursor_x = 0, cursor_y = 0;
+		if(this.room_to_place != null) {
+			cursor_x = this.room_to_place.x;
+			cursor_y = this.room_to_place.y;
+		} else {
+			cursor_x = this.player_x;
+			cursor_y = this.player_y;
+		}
+
+		int x_offset = 0 - this.x;
+		int y_offset = 0 - this.y;
+
+		TerminalSize size = this.screen.getTerminal().getTerminalSize();
+		if(0 > (cursor_x - this.x) * 5) {
+			this.x = cursor_x - 2;
+		}
+
+		if(0 > (cursor_y - this.y) * 5) {
+			this.y = cursor_y - 2;
+		}
+
+		if(size.getColumns() <= (cursor_x - this.x) * 5) {
+			this.x += 2;
+		}
+
+		if(size.getRows() <= (cursor_y - this.y) * 5) {
+			this.y += 2;
+		}
+	}
 
 	public void drawHighlight(int x_offset, int y_offset) {
 		this.writer.setBackgroundColor(Terminal.Color.MAGENTA);
