@@ -7,12 +7,21 @@ public class Room {
 	public int x, y;
 
 	public Room(int x, int y) {
-		Random generator = new Random();
-		this.setup(x, y, generator.nextBoolean(), generator.nextBoolean(), generator.nextBoolean(), generator.nextBoolean());
+		this.setup(x, y, Exit.getRandom(), Exit.getRandom(), Exit.getRandom(), Exit.getRandom());
 	}
 
 	public Room(int x, int y, boolean north, boolean east, boolean south, boolean west) {
 		this.setup(x, y, north, east, south, west);
+	}
+
+	private void setup(int x, int y, Exit north, Exit east, Exit south, Exit west) {
+		this.north = north;
+		this.east = east;
+		this.south = south;
+		this.west = west;
+
+		this.x = x;
+		this.y = y;
 	}
 
 	private void setup(int x, int y, boolean north, boolean east, boolean south, boolean west) {
@@ -93,6 +102,11 @@ public class Room {
 	public enum Exit {
 		NONE,
 		DOOR,
-		CORRIDOR
+		CORRIDOR;
+
+		public static Exit getRandom() {
+			Random generator = new Random();
+			return Exit.values()[generator.nextInt(Exit.values().length)];
+		}
 	}
 }
