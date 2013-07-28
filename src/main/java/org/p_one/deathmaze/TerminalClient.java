@@ -135,11 +135,11 @@ public class TerminalClient {
 		Room current = this.gameState.map.getRoom(this.gameState.player_x, this.gameState.player_y);
 		Room proposed = this.gameState.map.getRoom(this.gameState.player_x + x_delta, this.gameState.player_y + y_delta);
 
-		if(proposed == null) {
+		if(proposed == null && current.exit(x_delta, y_delta) != Room.Exit.NONE) {
 			this.gameState.roomToPlace = new Room(this.gameState.player_x + x_delta, this.gameState.player_y + y_delta);
 			this.gameState.player_x += x_delta;
 			this.gameState.player_y += y_delta;
-		} else if(current != null && current.connected(proposed)) {
+		} else if(current != null && proposed != null && current.connected(proposed)) {
 				this.gameState.player_x += x_delta;
 				this.gameState.player_y += y_delta;
 		}
