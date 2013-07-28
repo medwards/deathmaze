@@ -39,4 +39,13 @@ public class DungeonMap {
 		}
 		return true;
 	}
+
+	public Room getRoom(int x, int y) {
+		for(Room room : this.rooms) {
+			if(room.x == x && room.y == y) {
+				return room;
+			}
+		}
+		return null;
+	}
 }

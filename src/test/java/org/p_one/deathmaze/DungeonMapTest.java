@@ -84,4 +84,14 @@ public class DungeonMapTest extends TestCase {
 		assertFalse(map.validRoom(not_connected_room));
 		assertFalse(map.validRoom(breaks_connection_room));
 	}
+
+	public void testGetRoom() {
+		DungeonMap map = new DungeonMap();
+		Room base_room = new Room(1, 0, true, true, true, true);
+		map.add(base_room);
+		Room room = new Room(0, 0, true, true, true, true);
+		map.add(room);
+
+		assertEquals(map.getRoom(0, 0), room);
+	}
 }
