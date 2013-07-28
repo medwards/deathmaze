@@ -59,18 +59,6 @@ public class DungeonMapTest extends TestCase {
 		assertFalse(map.validRoom(room2));
 	}
 
-	public void testValidRoomMustBeAdjacent() {
-		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, true, true, true, true);
-		map.add(room);
-
-		Room adjacent_room = new Room(0, 1, true, true, true, true);
-		Room not_adj_room = new Room(0, 6, true, true, true, true);
-
-		assertTrue(map.validRoom(adjacent_room));
-		assertFalse(map.validRoom(not_adj_room));
-	}
-
 	public void testValidRoomMustConnect() {
 		DungeonMap map = new DungeonMap();
 		Room room = new Room(0, 0, true, false, true, false);
@@ -79,10 +67,12 @@ public class DungeonMapTest extends TestCase {
 		Room connects_room = new Room(0, 1, true, false, false, false);
 		Room breaks_connection_room = new Room(-1, 0, false, true, false, false);
 		Room not_connected_room = new Room(1, 0, true, false, true, false);
+		Room distant_room = new Room(5, 5, true, true, true, true);
 
 		assertTrue(map.validRoom(connects_room));
 		assertFalse(map.validRoom(not_connected_room));
 		assertFalse(map.validRoom(breaks_connection_room));
+		assertFalse(map.validRoom(distant_room));
 	}
 
 	public void testGetRoom() {

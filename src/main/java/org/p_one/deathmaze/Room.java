@@ -26,6 +26,9 @@ public class Room {
 	public boolean connected(Room otherRoom) throws InvalidRoomConnection{
 		int xDiff = this.x - otherRoom.x;
 		int yDiff = this.y - otherRoom.y;
+		if(Math.abs(xDiff) + Math.abs(yDiff) != 1) {
+			return false;
+		}
 
 		boolean myExit = false, otherExit = false;
 

@@ -20,14 +20,8 @@ public class DungeonMap {
 		boolean connectedToSomething = false;
 		if(this.rooms.size() == 0) { connectedToSomething = true; }
 		for(Room room : this.rooms) {
-			if(room.x == newRoom.x && room.y == newRoom.y) {
-				return false;
-			}
-			int xDiff = Math.abs(room.x - newRoom.x);
-			int yDiff = Math.abs(room.y - newRoom.y);
-			int totalDiff = xDiff + yDiff;
 			try {
-				if(totalDiff == 1 && newRoom.connected(room)) {
+				if(newRoom.connected(room)) {
 					connectedToSomething = true;
 				}
 			} catch(InvalidRoomConnection e) {
