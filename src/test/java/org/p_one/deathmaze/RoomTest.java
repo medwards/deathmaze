@@ -58,6 +58,13 @@ public class RoomTest extends TestCase {
 		assertTrue(north_room.legal(room));
 	}
 
+	public void testLegalWhenNotAdjacent() {
+		Room room = new Room(0, 0, true, false, false, false);
+		Room north_room = new Room(0, -5, false, false, true, false);
+
+		assertTrue(room.legal(north_room));
+	}
+
 	public void testLegalWhenUnconnected() {
 		Room room = new Room(0, 0, true, false, false, false);
 		Room south_room = new Room(0, 1, false, false, false, false);

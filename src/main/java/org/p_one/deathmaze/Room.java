@@ -58,8 +58,10 @@ public class Room {
 		// otherwise return false in connected)
 		int xDiff = this.x - otherRoom.x;
 		int yDiff = this.y - otherRoom.y;
-		if(Math.abs(xDiff) + Math.abs(yDiff) != 1) {
+		if(Math.abs(xDiff) + Math.abs(yDiff) == 0) {
 			return false;
+		} else if(Math.abs(xDiff) + Math.abs(yDiff) > 1) {
+			return true;
 		}
 
 		boolean myExit = false, otherExit = false;
