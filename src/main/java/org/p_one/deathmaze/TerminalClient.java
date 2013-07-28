@@ -84,30 +84,22 @@ public class TerminalClient {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
 		if(kind == Key.Kind.ArrowDown) {
-			if(this.room_to_place != null) {
-				this.room_to_place.y++;
-			} else {
+			if(this.room_to_place == null) {
 				this.moveSouth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowUp) {
-			if(this.room_to_place != null) {
-				this.room_to_place.y--;
-			} else {
+			if(this.room_to_place == null) {
 				this.moveNorth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowLeft) {
-			if(this.room_to_place != null) {
-				this.room_to_place.x--;
-			} else {
+			if(this.room_to_place == null) {
 				this.moveWest();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowRight) {
-			if(this.room_to_place != null) {
-				this.room_to_place.x++;
-			} else {
+			if(this.room_to_place == null) {
 				this.moveEast();
 			}
 			this.forceFieldToCursor();
@@ -122,9 +114,7 @@ public class TerminalClient {
 		} else if(this.room_to_place != null && character == 'Z') {
 			this.room_to_place.rotate();
 		} else if(character == ' ') {
-			if(this.room_to_place == null) {
-				this.room_to_place = new Room(this.player_x, this.player_y);
-			} else {
+			if(this.room_to_place != null) {
 				this.map.add(room_to_place);
 				this.room_to_place = null;
 			}
@@ -151,7 +141,11 @@ public class TerminalClient {
 		Room current = this.map.getRoom(this.player_x, this.player_y);
 		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
 
-		if(current != null && proposed != null && current.connected(proposed)) {
+		if(proposed == null) {
+			this.room_to_place = new Room(this.player_x + x_delta, this.player_y + y_delta);
+			this.player_x += x_delta;
+			this.player_y += y_delta;
+		} else if(current != null && current.connected(proposed)) {
 				this.player_x += x_delta;
 				this.player_y += y_delta;
 		}
