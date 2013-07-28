@@ -20,7 +20,6 @@ public class TerminalClient {
 	public ScreenWriter writer;
 	public int x, y;
 	public int player_x, player_y;
-	public int highlight_x, highlight_y;
 	public Room room_to_place;
 
 	public TerminalClient() {
