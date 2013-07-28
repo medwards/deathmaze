@@ -99,6 +99,19 @@ public class Room {
 		return myExit == otherExit;
 	}
 
+	public Exit exit(int x_delta, int y_delta) {
+		if(y_delta == -1) {
+			return this.north;
+		} else if(y_delta == 1) {
+			return this.south;
+		} else if(x_delta == 1) {
+			return this.east;
+		} else if(x_delta == -1) {
+			return this.west;
+		}
+		return null;
+	}
+
 	public enum Exit {
 		NONE,
 		DOOR,

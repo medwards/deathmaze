@@ -86,4 +86,12 @@ public class RoomTest extends TestCase {
 
 		assertFalse(room.legal(south_room));
 	}
+
+	public void testExitConvertsCoordsIntoExit() {
+		Room room = new Room(0, 0, Room.Exit.DOOR, Room.Exit.CORRIDOR, Room.Exit.NONE, Room.Exit.NONE);
+		assertEquals(room.exit(0, -1), Room.Exit.DOOR);
+		assertEquals(room.exit(1, 0), Room.Exit.CORRIDOR);
+		assertEquals(room.exit(0, 1), Room.Exit.NONE);
+		assertNull(room.exit(2, 0));
+	}
 }
