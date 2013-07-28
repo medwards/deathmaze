@@ -20,12 +20,11 @@ public class DungeonMap {
 		boolean connectedToSomething = false;
 		if(this.rooms.size() == 0) { connectedToSomething = true; }
 		for(Room room : this.rooms) {
-			try {
-				if(newRoom.connected(room)) {
-					connectedToSomething = true;
-				}
-			} catch(InvalidRoomConnection e) {
+			if(!newRoom.legal(room)) {
 				return false;
+			}
+			if(newRoom.connected(room)) {
+				connectedToSomething = true;
 			}
 		}
 		if(!connectedToSomething) {

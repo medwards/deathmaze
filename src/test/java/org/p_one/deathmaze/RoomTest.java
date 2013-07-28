@@ -30,24 +30,25 @@ public class RoomTest extends TestCase {
 		assertTrue(north_room.connected(room));
 	}
 
-	public void testNotConnected() throws InvalidRoomConnection {
+	public void testNotConnectedWhenNotLinked() throws InvalidRoomConnection {
 		Room room = new Room(0, 0, true, false, false, false);
 		Room south_room = new Room(0, 1, false, false, true, false);
-		Room distant_room = new Room(1, 1, true, true, true, true);
 
 		assertFalse(room.connected(south_room));
+	}
+
+	public void testNotConnectedWhenNotAdjacent() {
+		Room room = new Room(0, 0, true, false, false, false);
+		Room distant_room = new Room(1, 1, true, true, true, true);
 		assertFalse(room.connected(distant_room));
 	}
 
-	public void testBrokenConnectionRaisesException() {
+
+	public void testNotConnectedWhenBroken() {
 		Room room = new Room(0, 0, false, false, false, false);
 		Room north_room = new Room(0, -1, false, false, true, false);
 
-		try {
-			room.connected(north_room);
-			fail();
-		} catch(InvalidRoomConnection e) {
-		}
+		assertFalse(room.connected(north_room));
 	}
 
 	public void testLegalWhenConnected() {

@@ -23,7 +23,7 @@ public class Room {
 		this.north = old_west;
 	}
 
-	public boolean connected(Room otherRoom) throws InvalidRoomConnection{
+	public boolean connected(Room otherRoom) {
 		int xDiff = this.x - otherRoom.x;
 		int yDiff = this.y - otherRoom.y;
 		if(Math.abs(xDiff) + Math.abs(yDiff) != 1) {
@@ -46,9 +46,6 @@ public class Room {
 			otherExit = otherRoom.east;
 		}
 
-		if(myExit != otherExit) {
-			throw new InvalidRoomConnection();
-		}
 		return myExit && otherExit;
 	}
 
