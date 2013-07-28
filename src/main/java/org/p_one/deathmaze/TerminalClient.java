@@ -8,6 +8,7 @@ import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
+import org.p_one.deathmaze.InvalidRoomConnection;
 
 public class TerminalClient {
 	public static void main(String[] args) {
@@ -87,25 +88,25 @@ public class TerminalClient {
 			if(this.room_to_place != null) {
 				this.room_to_place.y++;
 			} else {
-				this.player_y++;
+				this.moveSouth();
 			}
 		} else if(kind == Key.Kind.ArrowUp) {
 			if(this.room_to_place != null) {
 				this.room_to_place.y--;
 			} else {
-				this.player_y--;
+				this.moveNorth();
 			}
 		} else if(kind == Key.Kind.ArrowLeft) {
 			if(this.room_to_place != null) {
 				this.room_to_place.x--;
 			} else {
-				this.player_x--;
+				this.moveWest();
 			}
 		} else if(kind == Key.Kind.ArrowRight) {
 			if(this.room_to_place != null) {
 				this.room_to_place.x++;
 			} else {
-				this.player_x++;
+				this.moveEast();
 			}
 		} else if(character == 'A') {
 			this.x--;
@@ -126,6 +127,36 @@ public class TerminalClient {
 			}
 		}
 	}
+
+	public void moveEast() {
+		this.move(1,0);
+	}
+
+	public void moveWest() {
+		this.move(-1, 0);
+	}
+
+	public void moveNorth() {
+		this.move(0, -1);
+	}
+
+	public void moveSouth() {
+		this.move(0, 1);
+	}
+
+	private void move(int x_delta, int y_delta) {
+		Room current = this.map.getRoom(this.player_x, this.player_y);
+		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
+
+		try {
+			if(current != null && proposed != null && current.connected(proposed)) {
+				this.player_x += x_delta;
+				this.player_y += y_delta;
+			}
+		} catch(InvalidRoomConnection e) {
+		}
+	}
+
 
 	public void drawHighlight(int x_offset, int y_offset) {
 		this.writer.setBackgroundColor(Terminal.Color.MAGENTA);
