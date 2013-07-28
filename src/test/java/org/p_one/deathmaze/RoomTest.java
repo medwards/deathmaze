@@ -22,7 +22,7 @@ public class RoomTest extends TestCase {
 		assertEquals(room.west, false);
 	}
 
-	public void testConnected() throws InvalidRoomConnection {
+	public void testConnected() {
 		Room room = new Room(0, 0, true, false, false, false);
 		Room north_room = new Room(0, -1, false, false, true, false);
 
@@ -30,7 +30,7 @@ public class RoomTest extends TestCase {
 		assertTrue(north_room.connected(room));
 	}
 
-	public void testNotConnectedWhenNotLinked() throws InvalidRoomConnection {
+	public void testNotConnectedWhenNotLinked() {
 		Room room = new Room(0, 0, true, false, false, false);
 		Room south_room = new Room(0, 1, false, false, true, false);
 

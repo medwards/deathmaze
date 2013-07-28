@@ -1,7 +1,5 @@
 package org.p_one.deathmaze;
 
-import org.p_one.deathmaze.InvalidRoomConnection;
-
 public class Room {
 	public boolean north, east, south, west;
 	public int x, y;

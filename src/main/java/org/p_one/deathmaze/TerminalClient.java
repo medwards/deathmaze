@@ -8,7 +8,6 @@ import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
-import org.p_one.deathmaze.InvalidRoomConnection;
 
 public class TerminalClient {
 	public static void main(String[] args) {
@@ -148,12 +147,9 @@ public class TerminalClient {
 		Room current = this.map.getRoom(this.player_x, this.player_y);
 		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
 
-		try {
-			if(current != null && proposed != null && current.connected(proposed)) {
+		if(current != null && proposed != null && current.connected(proposed)) {
 				this.player_x += x_delta;
 				this.player_y += y_delta;
-			}
-		} catch(InvalidRoomConnection e) {
 		}
 	}
 
