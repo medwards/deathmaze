@@ -79,22 +79,22 @@ public class TerminalClient {
 		Key.Kind kind = input.getKind();
 		if(kind == Key.Kind.ArrowDown) {
 			if(this.gameState.roomToPlace == null) {
-				this.moveSouth();
+				this.gameState.moveSouth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowUp) {
 			if(this.gameState.roomToPlace == null) {
-				this.moveNorth();
+				this.gameState.moveNorth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowLeft) {
 			if(this.gameState.roomToPlace == null) {
-				this.moveWest();
+				this.gameState.moveWest();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowRight) {
 			if(this.gameState.roomToPlace == null) {
-				this.moveEast();
+				this.gameState.moveEast();
 			}
 			this.forceFieldToCursor();
 		} else if(character == 'A') {
@@ -112,36 +112,6 @@ public class TerminalClient {
 				this.gameState.map.add(this.gameState.roomToPlace);
 				this.gameState.roomToPlace = null;
 			}
-		}
-	}
-
-	public void moveEast() {
-		this.move(1,0);
-	}
-
-	public void moveWest() {
-		this.move(-1, 0);
-	}
-
-	public void moveNorth() {
-		this.move(0, -1);
-	}
-
-	public void moveSouth() {
-		this.move(0, 1);
-	}
-
-	private void move(int x_delta, int y_delta) {
-		Room current = this.gameState.map.getRoom(this.gameState.player_x, this.gameState.player_y);
-		Room proposed = this.gameState.map.getRoom(this.gameState.player_x + x_delta, this.gameState.player_y + y_delta);
-
-		if(proposed == null && current.exit(x_delta, y_delta) != Room.Exit.NONE) {
-			this.gameState.roomToPlace = new Room(this.gameState.player_x + x_delta, this.gameState.player_y + y_delta);
-			this.gameState.player_x += x_delta;
-			this.gameState.player_y += y_delta;
-		} else if(current != null && proposed != null && current.connected(proposed)) {
-				this.gameState.player_x += x_delta;
-				this.gameState.player_y += y_delta;
 		}
 	}
 
