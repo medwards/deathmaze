@@ -10,7 +10,17 @@ public class Room {
 		this.setup(x, y, Exit.getRandom(), Exit.getRandom(), Exit.getRandom(), Exit.getRandom());
 	}
 
-	public Room(int x, int y, boolean north, boolean east, boolean south, boolean west) {
+	public Room(int x, int y, Exit north, Exit east, Exit south, Exit west) {
+		this.setup(x, y, north, east, south, west);
+	}
+
+	public Room(int x, int y, boolean n, boolean e, boolean s, boolean w) {
+		Exit north, east, south, west;
+		north = n ? Exit.DOOR : Exit.NONE;
+		east = e ? Exit.DOOR : Exit.NONE;
+		south = s ? Exit.DOOR : Exit.NONE;
+		west = w ? Exit.DOOR : Exit.NONE;
+
 		this.setup(x, y, north, east, south, west);
 	}
 
@@ -19,16 +29,6 @@ public class Room {
 		this.east = east;
 		this.south = south;
 		this.west = west;
-
-		this.x = x;
-		this.y = y;
-	}
-
-	private void setup(int x, int y, boolean north, boolean east, boolean south, boolean west) {
-		this.north = north ? Exit.DOOR : Exit.NONE;
-		this.east = east ? Exit.DOOR : Exit.NONE;
-		this.south = south ? Exit.DOOR : Exit.NONE;
-		this.west = west ? Exit.DOOR : Exit.NONE;
 
 		this.x = x;
 		this.y = y;

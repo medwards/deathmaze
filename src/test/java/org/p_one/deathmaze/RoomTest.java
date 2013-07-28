@@ -5,7 +5,14 @@ import junit.framework.TestCase;
 import org.p_one.deathmaze.Room;
 
 public class RoomTest extends TestCase {
-	public void testCreate() {
+	public void testConstruct() {
+		Room room = new Room(0, 0, Room.Exit.DOOR, Room.Exit.CORRIDOR, Room.Exit.NONE, Room.Exit.NONE);
+		assertEquals(room.north, Room.Exit.DOOR);
+		assertEquals(room.east, Room.Exit.CORRIDOR);
+		assertEquals(room.south, Room.Exit.NONE);
+		assertEquals(room.west, Room.Exit.NONE);
+	}
+	public void testConstructWithBooleans() {
 		Room room = new Room(0, 0, true, true, false, false);
 		assertEquals(room.north, Room.Exit.DOOR);
 		assertEquals(room.east, Room.Exit.DOOR);
