@@ -3,7 +3,7 @@ package org.p_one.deathmaze;
 import java.util.Random;
 
 public class Room {
-	public boolean north, east, south, west;
+	public Exit north, east, south, west;
 	public int x, y;
 
 	public Room(int x, int y) {
@@ -16,17 +16,17 @@ public class Room {
 	}
 
 	private void setup(int x, int y, boolean north, boolean east, boolean south, boolean west) {
-		this.north = north;
-		this.east = east;
-		this.south = south;
-		this.west = west;
+		this.north = north ? Exit.DOOR : Exit.NONE;
+		this.east = east ? Exit.DOOR : Exit.NONE;
+		this.south = south ? Exit.DOOR : Exit.NONE;
+		this.west = west ? Exit.DOOR : Exit.NONE;
 
 		this.x = x;
 		this.y = y;
 	}
 
 	public void rotate() {
-		boolean old_west = this.west;
+		Exit old_west = this.west;
 		this.west = this.south;
 		this.south = this.east;
 		this.east = this.north;
@@ -40,7 +40,7 @@ public class Room {
 			return false;
 		}
 
-		boolean myExit = false, otherExit = false;
+		Exit myExit = Exit.NONE, otherExit = Exit.NONE;
 
 		if(yDiff == -1) {
 			myExit = this.south;
@@ -56,7 +56,7 @@ public class Room {
 			otherExit = otherRoom.east;
 		}
 
-		return myExit && otherExit;
+		return myExit != Exit.NONE && myExit == otherExit;
 	}
 
 	public boolean legal(Room otherRoom) {
@@ -71,7 +71,7 @@ public class Room {
 			return true;
 		}
 
-		boolean myExit = false, otherExit = false;
+		Exit myExit = Exit.NONE, otherExit = Exit.NONE;
 
 		if(yDiff == -1) {
 			myExit = this.south;
@@ -88,5 +88,11 @@ public class Room {
 		}
 
 		return myExit == otherExit;
+	}
+
+	public enum Exit {
+		NONE,
+		DOOR,
+		CORRIDOR
 	}
 }

@@ -208,16 +208,16 @@ public class TerminalClient {
 		this.writer.drawString(x + 1, y + 1, "   ");
 		this.writer.drawString(x + 1, y + 2, "   ");
 		this.writer.drawString(x + 1, y + 3, "   ");
-		if(room.north) {
+		if(room.north == Room.Exit.DOOR) {
 			this.writer.drawString(x + 2, y + 0, " ");
 		}
-		if(room.east) {
+		if(room.east == Room.Exit.DOOR) {
 			this.writer.drawString(x + 4, y + 2, " ");
 		}
-		if(room.south) {
+		if(room.south == Room.Exit.DOOR) {
 			this.writer.drawString(x + 2, y + 4, " ");
 		}
-		if(room.west) {
+		if(room.west == Room.Exit.DOOR) {
 			this.writer.drawString(x + 0, y + 2, " ");
 		}
 		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
