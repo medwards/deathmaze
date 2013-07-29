@@ -55,6 +55,7 @@ public class TerminalClient {
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
 		}
+		this.drawPlayer(this.gameState, x_offset, y_offset, Terminal.Color.YELLOW);
 		if(this.gameState.roomToPlace != null) {
 			this.drawHighlight(x_offset, y_offset);
 			Terminal.Color color = this.gameState.map.validRoom(this.gameState.roomToPlace) ? Terminal.Color.GREEN : Terminal.Color.RED;
@@ -186,6 +187,14 @@ public class TerminalClient {
 			this.writer.drawString(x + 0, y + 2, " ");
 			this.writer.drawString(x + 0, y + 3, " ");
 		}
+		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
+	}
+
+	public void drawPlayer(Game state, int x, int y, Terminal.Color color) {
+		x = ((state.player_x + x) * 5) + 2;
+		y = ((state.player_y + y) * 5) + 2;
+		this.writer.setBackgroundColor(color);
+		this.writer.drawString(x, y, "⍟");
 		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
 	}
 }
