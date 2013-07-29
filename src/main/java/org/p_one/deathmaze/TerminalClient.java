@@ -22,7 +22,7 @@ public class TerminalClient {
 
 	public TerminalClient() {
 		this.gameState = new Game();
-		Room aRoom = new Room(0, 0, Chit.FOUR_WAY);
+		Room aRoom = new Room(0, 0, Chit.FOUR_WAY, true);
 		this.gameState.map.add(aRoom);
 
 		this.screen = TerminalFacade.createScreen();
@@ -158,6 +158,7 @@ public class TerminalClient {
 		int x = (room.x + x_offset) * 5;
 		int y = (room.y + y_offset) * 5;
 		this.writer.setBackgroundColor(color);
+		this.writer.setForegroundColor(Terminal.Color.BLACK);
 		this.writer.drawString(x + 1, y + 1, "   ");
 		this.writer.drawString(x + 1, y + 2, "   ");
 		this.writer.drawString(x + 1, y + 3, "   ");
@@ -187,7 +188,12 @@ public class TerminalClient {
 			this.writer.drawString(x + 0, y + 2, " ");
 			this.writer.drawString(x + 0, y + 3, " ");
 		}
+
+		if(room.isEntrance()) {
+		        this.writer.drawString(x + 2, y + 2, "➚");
+		}
 		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
+		this.writer.setForegroundColor(Terminal.Color.DEFAULT);
 	}
 
 	public void drawPlayer(Game state, int x, int y, Terminal.Color color) {

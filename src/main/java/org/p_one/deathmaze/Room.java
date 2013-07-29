@@ -7,11 +7,19 @@ public class Room {
 	private Chit chit;
 	private int NORTH, EAST, SOUTH, WEST; // kind of violating naming here
 
+	private boolean entrance;
+
 	public Room(int x, int y) {
 		this(x, y, Chit.getRandom());
 	}
 
 	public Room(int x, int y, Chit chit) {
+		this(x, y, chit, false);
+	}
+
+	public Room(int x, int y, Chit chit, boolean entrance) {
+		this.entrance = entrance;
+
 		this.chit = chit;
 		this.NORTH = 0;
 		this.EAST = 1;
@@ -36,6 +44,10 @@ public class Room {
 
 	public Chit.Exit getWest() {
 		return this.exit(-1, 0);
+	}
+
+	public boolean isEntrance() {
+		return this.entrance;
 	}
 
 	public void rotate() {

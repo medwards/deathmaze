@@ -6,6 +6,16 @@ import org.p_one.deathmaze.Room;
 
 public class RoomTest extends TestCase {
 	public void testConstruct() {
+		Room room = new Room(0, 0, Chit.CORRIDOR_WITH_DOOR, true);
+		assertEquals(Chit.Exit.CORRIDOR, room.getNorth());
+		assertEquals(Chit.Exit.DOOR, room.getEast());
+		assertEquals(Chit.Exit.CORRIDOR, room.getSouth());
+		assertEquals(Chit.Exit.NONE, room.getWest());
+
+		assertEquals(true, room.isEntrance());
+	}
+
+	public void testConstructWithoutEntrance() {
 		Room room = new Room(0, 0, Chit.CORRIDOR_WITH_DOOR);
 		assertEquals(Chit.Exit.CORRIDOR, room.getNorth());
 		assertEquals(Chit.Exit.DOOR, room.getEast());
