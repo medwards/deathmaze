@@ -14,9 +14,9 @@ public class GameTest extends TestCase {
 
 	public void testMove() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Chit.Exit.NONE, Chit.Exit.CORRIDOR, Chit.Exit.DOOR, Chit.Exit.NONE));
-		game.map.add(new Room(0, 1, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
-		game.map.add(new Room(1, 0, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.CORRIDOR));
+		game.map.add(new Room(0, 0, Chit.CORRIDOR_WITH_DOORS));
+		game.map.add(new Room(-1, 0, Chit.FOUR_WAY));
+		game.map.add(new Room(0, 1, Chit.CORRIDOR_TURN));
 
 		game.moveSouth();
 		assertEquals(0, game.player_x);
@@ -26,20 +26,19 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.player_x);
 		assertEquals(0, game.player_y);
 
-		game.moveEast();
-		assertEquals(1, game.player_x);
+		game.moveWest();
+		assertEquals(-1, game.player_x);
 		assertEquals(0, game.player_y);
 
-		game.moveWest();
+		game.moveEast();
 		assertEquals(0, game.player_x);
 		assertEquals(0, game.player_y);
 	}
 
 	public void testMoveBlocked() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
 
-		game.moveNorth();
 		game.moveEast();
 		game.moveSouth();
 		game.moveWest();
@@ -50,7 +49,7 @@ public class GameTest extends TestCase {
 
 	public void testMoveOffBoardSwitchesToPlacement() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
 
 		// should cause Chit.TWO_WAY_STRAIGHT
 		Chit.seed = new Long(0);

@@ -16,15 +16,15 @@ public class DungeonMapTest extends TestCase {
 	// figure out mocking and just do this once
 	public void testAddRoomToEmptyMap() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
+		Room room = new Room(0, 0, Chit.DEAD_END);
 		map.add(room);
 		assertEquals(room, map.rooms.toArray()[0]);
 	}
 
 	public void testAddRoomMustHaveUniqueCoords() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
-		Room room2 = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
+		Room room = new Room(0, 0, Chit.DEAD_END);
+		Room room2 = new Room(0, 0, Chit.DEAD_END);
 		map.add(room);
 		map.add(room2);
 		assertEquals(1, map.rooms.size());
@@ -32,11 +32,11 @@ public class DungeonMapTest extends TestCase {
 
 	public void testAddedRoomsMustBeAdjacent() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
+		Room room = new Room(0, 0, Chit.FOUR_WAY);
 		map.add(room);
 
-		Room adjacent_room = new Room(0, 1, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
-		Room not_adj_room = new Room(0, 6, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
+		Room adjacent_room = new Room(0, 1, Chit.FOUR_WAY);
+		Room not_adj_room = new Room(0, 6, Chit.FOUR_WAY);
 		map.add(adjacent_room);
 		map.add(not_adj_room);
 
@@ -46,29 +46,29 @@ public class DungeonMapTest extends TestCase {
 
 	public void testValidRoomInEmptyMap() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
+		Room room = new Room(0, 0, Chit.DEAD_END);
 		assertTrue(map.validRoom(room));
 	}
 
 	public void testValidRoomMustHaveUniqueCoords() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
+		Room room = new Room(0, 0, Chit.FOUR_WAY);
 		map.add(room);
 
-		Room room2 = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
+		Room room2 = new Room(0, 0, Chit.FOUR_WAY);
 
 		assertFalse(map.validRoom(room2));
 	}
 
 	public void testValidRoomMustConnect() {
 		DungeonMap map = new DungeonMap();
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.DOOR, Chit.Exit.NONE);
+		Room room = new Room(0, 0, Chit.TWO_WAY);
 		map.add(room);
 
-		Room connects_room = new Room(0, 1, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE);
-		Room breaks_connection_room = new Room(-1, 0, Chit.Exit.NONE, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE);
-		Room not_connected_room = new Room(1, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.DOOR, Chit.Exit.NONE);
-		Room distant_room = new Room(5, 5, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
+		Room connects_room = new Room(0, 1, Chit.TWO_WAY);
+		Room breaks_connection_room = new Room(-1, 0, Chit.TWO_WAY_TURN);
+		Room not_connected_room = new Room(1, 0, Chit.TWO_WAY);
+		Room distant_room = new Room(5, 5, Chit.FOUR_WAY);
 
 		assertTrue(map.validRoom(connects_room));
 		assertFalse(map.validRoom(not_connected_room));
@@ -78,9 +78,9 @@ public class DungeonMapTest extends TestCase {
 
 	public void testGetRoom() {
 		DungeonMap map = new DungeonMap();
-		Room base_room = new Room(1, 0, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
+		Room base_room = new Room(1, 0, Chit.FOUR_WAY);
 		map.add(base_room);
-		Room room = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
+		Room room = new Room(0, 0, Chit.FOUR_WAY);
 		map.add(room);
 
 		assertEquals(map.getRoom(0, 0), room);
