@@ -12,6 +12,15 @@ public class GameTest extends TestCase {
 		assertNull(game.roomToPlace);
 	}
 
+	public void testLeaveDungeon() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Chit.FOUR_WAY, true));
+
+		game.action();
+
+		assertEquals(Game.State.QUIT, game.state);
+	}
+
 	public void testMove() {
 		Game game = new Game();
 		game.map.add(new Room(0, 0, Chit.CORRIDOR_WITH_DOORS));

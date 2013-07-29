@@ -7,6 +7,7 @@ public class Game {
 	public int player_x, player_y;
 	public DungeonMap map;
 	public Room roomToPlace;
+	public State state;
 
 	public Game() {
 		this.player_x = 0;
@@ -14,6 +15,14 @@ public class Game {
 
 		this.map = new DungeonMap();
 		this.roomToPlace = null;
+		this.state = State.PLAYING;
+	}
+
+	public void action() {
+		Room current = this.map.getRoom(this.player_x, this.player_y);
+		if(current.isEntrance()) {
+			this.state = Game.State.QUIT;
+		}
 	}
 
 	public void moveNorth() {
@@ -60,5 +69,10 @@ public class Game {
 		}
 
 		return room;
+	}
+
+	public enum State {
+		PLAYING,
+		QUIT;
 	}
 }
