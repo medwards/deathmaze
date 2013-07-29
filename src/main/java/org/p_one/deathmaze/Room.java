@@ -3,18 +3,20 @@ package org.p_one.deathmaze;
 import org.p_one.deathmaze.Chit;
 
 public class Room {
-	private Chit.Exit north, east, south, west;
 	public int x, y;
+	private Chit chit;
+	private int NORTH, EAST, SOUTH, WEST; // kind of violating naming here
 
 	public Room(int x, int y) {
 		this(x, y, Chit.getRandom());
 	}
 
 	public Room(int x, int y, Chit chit) {
-		this.north = chit.exits[0];
-		this.east = chit.exits[1];
-		this.south = chit.exits[2];
-		this.west = chit.exits[3];
+		this.chit = chit;
+		this.NORTH = 0;
+		this.EAST = 1;
+		this.SOUTH = 2;
+		this.WEST = 3;
 
 		this.x = x;
 		this.y = y;
@@ -37,11 +39,11 @@ public class Room {
 	}
 
 	public void rotate() {
-		Chit.Exit old_west = this.west;
-		this.west = this.south;
-		this.south = this.east;
-		this.east = this.north;
-		this.north = old_west;
+		int oldWEST = this.WEST;
+		this.WEST = this.SOUTH;
+		this.SOUTH = this.EAST;
+		this.EAST = this.NORTH;
+		this.NORTH = oldWEST;
 	}
 
 	public boolean connected(Room otherRoom) {
@@ -103,13 +105,13 @@ public class Room {
 
 	public Chit.Exit exit(int x_delta, int y_delta) {
 		if(y_delta == -1) {
-			return this.north;
+			return this.chit.exits[NORTH];
 		} else if(y_delta == 1) {
-			return this.south;
+			return this.chit.exits[SOUTH];
 		} else if(x_delta == 1) {
-			return this.east;
+			return this.chit.exits[EAST];
 		} else if(x_delta == -1) {
-			return this.west;
+			return this.chit.exits[WEST];
 		}
 		return null;
 	}
