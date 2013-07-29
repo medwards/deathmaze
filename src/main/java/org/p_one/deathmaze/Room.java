@@ -1,16 +1,16 @@
 package org.p_one.deathmaze;
 
-import java.util.Random;
+import org.p_one.deathmaze.Chit;
 
 public class Room {
-	public Exit north, east, south, west;
+	public Chit.Exit north, east, south, west;
 	public int x, y;
 
 	public Room(int x, int y) {
-		this(x, y, Exit.getRandom(), Exit.getRandom(), Exit.getRandom(), Exit.getRandom());
+		this(x, y, Chit.Exit.getRandom(), Chit.Exit.getRandom(), Chit.Exit.getRandom(), Chit.Exit.getRandom());
 	}
 
-	public Room(int x, int y, Exit north, Exit east, Exit south, Exit west) {
+	public Room(int x, int y, Chit.Exit north, Chit.Exit east, Chit.Exit south, Chit.Exit west) {
 		this.north = north;
 		this.east = east;
 		this.south = south;
@@ -21,7 +21,7 @@ public class Room {
 	}
 
 	public void rotate() {
-		Exit old_west = this.west;
+		Chit.Exit old_west = this.west;
 		this.west = this.south;
 		this.south = this.east;
 		this.east = this.north;
@@ -35,7 +35,7 @@ public class Room {
 			return false;
 		}
 
-		Exit myExit = Exit.NONE, otherExit = Exit.NONE;
+		Chit.Exit myExit = Chit.Exit.NONE, otherExit = Chit.Exit.NONE;
 
 		if(yDiff == -1) {
 			myExit = this.south;
@@ -51,7 +51,7 @@ public class Room {
 			otherExit = otherRoom.east;
 		}
 
-		return myExit != Exit.NONE && myExit == otherExit;
+		return myExit != Chit.Exit.NONE && myExit == otherExit;
 	}
 
 	public boolean legal(Room otherRoom) {
@@ -66,7 +66,7 @@ public class Room {
 			return true;
 		}
 
-		Exit myExit = Exit.NONE, otherExit = Exit.NONE;
+		Chit.Exit myExit = Chit.Exit.NONE, otherExit = Chit.Exit.NONE;
 
 		if(yDiff == -1) {
 			myExit = this.south;
@@ -85,7 +85,7 @@ public class Room {
 		return myExit == otherExit;
 	}
 
-	public Exit exit(int x_delta, int y_delta) {
+	public Chit.Exit exit(int x_delta, int y_delta) {
 		if(y_delta == -1) {
 			return this.north;
 		} else if(y_delta == 1) {
@@ -96,24 +96,5 @@ public class Room {
 			return this.west;
 		}
 		return null;
-	}
-
-	public enum Exit {
-		NONE,
-		DOOR,
-		CORRIDOR;
-
-		public static Long seed = null;
-
-		public static Exit getRandom() {
-			Random generator;
-			if(Exit.seed != null) {
-				generator = new Random(Exit.seed.longValue());
-			} else {
-				generator = new Random();
-			}
-			Exit.seed = new Long(generator.nextLong());
-			return Exit.values()[generator.nextInt(Exit.values().length)];
-		}
 	}
 }

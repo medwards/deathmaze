@@ -14,9 +14,9 @@ public class GameTest extends TestCase {
 
 	public void testMove() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Room.Exit.NONE, Room.Exit.CORRIDOR, Room.Exit.DOOR, Room.Exit.NONE));
-		game.map.add(new Room(0, 1, Room.Exit.DOOR, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
-		game.map.add(new Room(1, 0, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.CORRIDOR));
+		game.map.add(new Room(0, 0, Chit.Exit.NONE, Chit.Exit.CORRIDOR, Chit.Exit.DOOR, Chit.Exit.NONE));
+		game.map.add(new Room(0, 1, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
+		game.map.add(new Room(1, 0, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.CORRIDOR));
 
 		game.moveSouth();
 		assertEquals(0, game.player_x);
@@ -37,7 +37,7 @@ public class GameTest extends TestCase {
 
 	public void testMoveBlocked() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
+		game.map.add(new Room(0, 0, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
 
 		game.moveNorth();
 		game.moveEast();
@@ -50,10 +50,10 @@ public class GameTest extends TestCase {
 
 	public void testMoveOffBoardSwitchesToPlacement() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Room.Exit.DOOR, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
+		game.map.add(new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
 
 		// should cause DOOR, DOOR, DOOR, NONE
-		Room.Exit.seed = new Long(0);
+		Chit.Exit.seed = new Long(0);
 		game.moveNorth();
 
 		assertEquals(0, game.player_x);
@@ -62,23 +62,23 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);
 
-		assertEquals(Room.Exit.DOOR, game.roomToPlace.north);
-		assertEquals(Room.Exit.DOOR, game.roomToPlace.east);
-		assertEquals(Room.Exit.DOOR, game.roomToPlace.south);
-		assertEquals(Room.Exit.NONE, game.roomToPlace.west);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.north);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.east);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
 	}
 
 	public void testMoveOffBoardDoesNotGiveImpossibleRooms() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Room.Exit.DOOR, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
+		game.map.add(new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
 
 		// a normal new Room with this seed chould cause NONE, CORR, NONE, CORR
-		Room.Exit.seed = new Long(20);
+		Chit.Exit.seed = new Long(20);
 		game.moveNorth();
 
-		assertEquals(Room.Exit.NONE, game.roomToPlace.north);
-		assertEquals(Room.Exit.CORRIDOR, game.roomToPlace.east);
-		assertEquals(Room.Exit.DOOR, game.roomToPlace.south);
-		assertEquals(Room.Exit.NONE, game.roomToPlace.west);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.north);
+		assertEquals(Chit.Exit.CORRIDOR, game.roomToPlace.east);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
 	}
 }

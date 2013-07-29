@@ -37,7 +37,7 @@ public class Game {
 		Room current = this.map.getRoom(this.player_x, this.player_y);
 		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
 
-		if(proposed == null && current.exit(x_delta, y_delta) != Room.Exit.NONE) {
+		if(proposed == null && current.exit(x_delta, y_delta) != Chit.Exit.NONE) {
 			this.roomToPlace = this.makeNewRoom(this.player_x + x_delta, this.player_y + y_delta);
 			this.player_x += x_delta;
 			this.player_y += y_delta;
