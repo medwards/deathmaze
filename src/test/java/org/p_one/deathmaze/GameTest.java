@@ -67,4 +67,18 @@ public class GameTest extends TestCase {
 		assertEquals(Room.Exit.DOOR, game.roomToPlace.south);
 		assertEquals(Room.Exit.NONE, game.roomToPlace.west);
 	}
+
+	public void testMoveOffBoardDoesNotGiveImpossibleRooms() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Room.Exit.DOOR, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
+
+		// a normal new Room with this seed chould cause NONE, CORR, NONE, CORR
+		Room.Exit.seed = new Long(20);
+		game.moveNorth();
+
+		assertEquals(Room.Exit.NONE, game.roomToPlace.north);
+		assertEquals(Room.Exit.CORRIDOR, game.roomToPlace.east);
+		assertEquals(Room.Exit.DOOR, game.roomToPlace.south);
+		assertEquals(Room.Exit.NONE, game.roomToPlace.west);
+	}
 }

@@ -38,13 +38,27 @@ public class Game {
 		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
 
 		if(proposed == null && current.exit(x_delta, y_delta) != Room.Exit.NONE) {
-			this.roomToPlace = new Room(this.player_x + x_delta, this.player_y + y_delta);
+			this.roomToPlace = this.makeNewRoom(this.player_x + x_delta, this.player_y + y_delta);
 			this.player_x += x_delta;
 			this.player_y += y_delta;
 		} else if(current != null && proposed != null && current.connected(proposed)) {
-				this.player_x += x_delta;
-				this.player_y += y_delta;
+			this.player_x += x_delta;
+			this.player_y += y_delta;
 		}
 	}
 
+	private Room makeNewRoom(int x, int y) {
+		Room room = new Room(x, y);
+		while(!this.map.validRoom(room)) {
+			for(int i = 0; i < 4; i++) {
+				if(this.map.validRoom(room)) {
+					return room;
+				}
+				room.rotate();
+			}
+			room = new Room(x, y);
+		}
+
+		return room;
+	}
 }
