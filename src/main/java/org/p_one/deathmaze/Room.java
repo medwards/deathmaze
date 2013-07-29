@@ -10,6 +10,10 @@ public class Room {
 		this(x, y, Chit.Exit.getRandom(), Chit.Exit.getRandom(), Chit.Exit.getRandom(), Chit.Exit.getRandom());
 	}
 
+	public Room(int x, int y, Chit chit) {
+		this(x, y, chit.exits[0], chit.exits[1], chit.exits[2], chit.exits[3]);
+	}
+
 	public Room(int x, int y, Chit.Exit north, Chit.Exit east, Chit.Exit south, Chit.Exit west) {
 		this.north = north;
 		this.east = east;
