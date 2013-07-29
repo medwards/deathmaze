@@ -3,7 +3,7 @@ package org.p_one.deathmaze;
 import org.p_one.deathmaze.Chit;
 
 public class Room {
-	public Chit.Exit north, east, south, west;
+	private Chit.Exit north, east, south, west;
 	public int x, y;
 
 	public Room(int x, int y) {
@@ -11,14 +11,10 @@ public class Room {
 	}
 
 	public Room(int x, int y, Chit chit) {
-		this(x, y, chit.exits[0], chit.exits[1], chit.exits[2], chit.exits[3]);
-	}
-
-	public Room(int x, int y, Chit.Exit north, Chit.Exit east, Chit.Exit south, Chit.Exit west) {
-		this.north = north;
-		this.east = east;
-		this.south = south;
-		this.west = west;
+		this.north = chit.exits[0];
+		this.east = chit.exits[1];
+		this.south = chit.exits[2];
+		this.west = chit.exits[3];
 
 		this.x = x;
 		this.y = y;
@@ -58,17 +54,17 @@ public class Room {
 		Chit.Exit myExit = Chit.Exit.NONE, otherExit = Chit.Exit.NONE;
 
 		if(yDiff == -1) {
-			myExit = this.south;
-			otherExit = otherRoom.north;
+			myExit = this.getSouth();
+			otherExit = otherRoom.getNorth();
 		} else if(yDiff == 1) {
-			myExit = this.north;
-			otherExit = otherRoom.south;
+			myExit = this.getNorth();
+			otherExit = otherRoom.getSouth();
 		} else if(xDiff == -1) {
-			myExit = this.east;
-			otherExit = otherRoom.west;
+			myExit = this.getEast();
+			otherExit = otherRoom.getWest();
 		} else if(xDiff == 1) {
-			myExit = this.west;
-			otherExit = otherRoom.east;
+			myExit = this.getWest();
+			otherExit = otherRoom.getEast();
 		}
 
 		return myExit != Chit.Exit.NONE && myExit == otherExit;
@@ -89,17 +85,17 @@ public class Room {
 		Chit.Exit myExit = Chit.Exit.NONE, otherExit = Chit.Exit.NONE;
 
 		if(yDiff == -1) {
-			myExit = this.south;
-			otherExit = otherRoom.north;
+			myExit = this.getSouth();
+			otherExit = otherRoom.getNorth();
 		} else if(yDiff == 1) {
-			myExit = this.north;
-			otherExit = otherRoom.south;
+			myExit = this.getNorth();
+			otherExit = otherRoom.getSouth();
 		} else if(xDiff == -1) {
-			myExit = this.east;
-			otherExit = otherRoom.west;
+			myExit = this.getEast();
+			otherExit = otherRoom.getWest();
 		} else if(xDiff == 1) {
-			myExit = this.west;
-			otherExit = otherRoom.east;
+			myExit = this.getWest();
+			otherExit = otherRoom.getEast();
 		}
 
 		return myExit == otherExit;
