@@ -14,16 +14,6 @@ public class Room {
 		this.setup(x, y, north, east, south, west);
 	}
 
-	public Room(int x, int y, boolean n, boolean e, boolean s, boolean w) {
-		Exit north, east, south, west;
-		north = n ? Exit.DOOR : Exit.NONE;
-		east = e ? Exit.DOOR : Exit.NONE;
-		south = s ? Exit.DOOR : Exit.NONE;
-		west = w ? Exit.DOOR : Exit.NONE;
-
-		this.setup(x, y, north, east, south, west);
-	}
-
 	private void setup(int x, int y, Exit north, Exit east, Exit south, Exit west) {
 		this.north = north;
 		this.east = east;
