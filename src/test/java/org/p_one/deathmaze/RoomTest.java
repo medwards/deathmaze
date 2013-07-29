@@ -14,11 +14,11 @@ public class RoomTest extends TestCase {
 	}
 
 	public void testConstructRandom() {
-		Chit.seed = new Long(1);
+		Chit.seed = new Long(0);
 		Room room = new Room(0, 0);
 
 		assertEquals(Chit.Exit.DOOR, room.north);
-		assertEquals(Chit.Exit.NONE, room.east);
+		assertEquals(Chit.Exit.DOOR, room.east);
 		assertEquals(Chit.Exit.DOOR, room.south);
 		assertEquals(Chit.Exit.NONE, room.west);
 	}

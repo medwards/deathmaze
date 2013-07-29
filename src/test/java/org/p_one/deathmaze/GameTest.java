@@ -62,9 +62,8 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);
 
-		// Note: the pre-rotation now baked into the test
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.north);
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.east);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.north);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.east);
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
 	}
@@ -75,14 +74,14 @@ public class GameTest extends TestCase {
 		game.map.add(new Room(0, 0, Chit.FOUR_WAY));
 		game.map.add(new Room(1, 0, Chit.FOUR_WAY));
 		game.map.add(new Room(-1, 0, Chit.FOUR_WAY));
-		game.map.add(new Room(1, -1, Chit.TWO_WAY_STRAIGHT));
-		game.map.add(new Room(-1, -1, Chit.TWO_WAY_STRAIGHT));
+		game.map.add(new Room(1, -1, Chit.TWO_WAY));
+		game.map.add(new Room(-1, -1, Chit.TWO_WAY));
 
 		// Should try FOUR_WAY and THREE_WAY first
 		Chit.seed = new Long(2);
 		game.moveNorth();
 
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.north);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.north);
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.east);
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
