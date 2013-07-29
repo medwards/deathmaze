@@ -10,12 +10,24 @@ public enum Chit {
 	DEAD_END(Exit.DOOR, Exit.NONE, Exit.NONE, Exit.NONE);
 
 	public final Exit[] exits;
+	public static Long seed = null;
 
 	Chit(Exit ... exits) {
 		this.exits = new Exit[4];
 		for(int i = 0; i < 4; i++) {
 			this.exits[i] = exits[i];
 		}
+	}
+
+	public static Chit getRandom() {
+		Random generator;
+		if(Chit.seed != null) {
+			generator = new Random(Chit.seed.longValue());
+		} else {
+			generator = new Random();
+		}
+		Chit.seed = new Long(generator.nextLong());
+		return Chit.values()[generator.nextInt(Chit.values().length)];
 	}
 
 	public enum Exit {
