@@ -24,6 +24,22 @@ public class Room {
 		this.y = y;
 	}
 
+	public Chit.Exit getNorth() {
+		return this.exit(0, -1);
+	}
+
+	public Chit.Exit getEast() {
+		return this.exit(1, 0);
+	}
+
+	public Chit.Exit getSouth() {
+		return this.exit(0, 1);
+	}
+
+	public Chit.Exit getWest() {
+		return this.exit(-1, 0);
+	}
+
 	public void rotate() {
 		Chit.Exit old_west = this.west;
 		this.west = this.south;

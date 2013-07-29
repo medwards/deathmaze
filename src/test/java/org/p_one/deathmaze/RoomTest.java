@@ -7,29 +7,29 @@ import org.p_one.deathmaze.Room;
 public class RoomTest extends TestCase {
 	public void testConstruct() {
 		Room room = new Room(0, 0, Chit.CORRIDOR_WITH_DOOR);
-		assertEquals(room.north, Chit.Exit.CORRIDOR);
-		assertEquals(room.east, Chit.Exit.DOOR);
-		assertEquals(room.south, Chit.Exit.CORRIDOR);
-		assertEquals(room.west, Chit.Exit.NONE);
+		assertEquals(Chit.Exit.CORRIDOR, room.getNorth());
+		assertEquals(Chit.Exit.DOOR, room.getEast());
+		assertEquals(Chit.Exit.CORRIDOR, room.getSouth());
+		assertEquals(Chit.Exit.NONE, room.getWest());
 	}
 
 	public void testConstructRandom() {
 		Chit.seed = new Long(0);
 		Room room = new Room(0, 0);
 
-		assertEquals(Chit.Exit.DOOR, room.north);
-		assertEquals(Chit.Exit.DOOR, room.east);
-		assertEquals(Chit.Exit.DOOR, room.south);
-		assertEquals(Chit.Exit.NONE, room.west);
+		assertEquals(Chit.Exit.DOOR, room.getNorth());
+		assertEquals(Chit.Exit.DOOR, room.getEast());
+		assertEquals(Chit.Exit.DOOR, room.getSouth());
+		assertEquals(Chit.Exit.NONE, room.getWest());
 	}
 
 	public void testRotate() {
 		Room room = new Room(0, 0, Chit.THREE_WAY);
 		room.rotate();
-		assertEquals(room.north, Chit.Exit.NONE);
-		assertEquals(room.east, Chit.Exit.DOOR);
-		assertEquals(room.south, Chit.Exit.DOOR);
-		assertEquals(room.west, Chit.Exit.DOOR);
+		assertEquals(Chit.Exit.NONE, room.getNorth());
+		assertEquals(Chit.Exit.DOOR, room.getEast());
+		assertEquals(Chit.Exit.DOOR, room.getSouth());
+		assertEquals(Chit.Exit.DOOR, room.getWest());
 	}
 
 	public void testConnected() {
@@ -98,5 +98,13 @@ public class RoomTest extends TestCase {
 		assertEquals(room.exit(0, 1), Chit.Exit.CORRIDOR);
 		assertEquals(room.exit(-1, 0), Chit.Exit.NONE);
 		assertNull(room.exit(2, 0));
+	}
+
+	public void testGetXDirection() {
+		Room room = new Room(0, 0, Chit.CORRIDOR_WITH_DOOR);
+		assertEquals(room.getNorth(), Chit.Exit.CORRIDOR);
+		assertEquals(room.getEast(), Chit.Exit.DOOR);
+		assertEquals(room.getSouth(), Chit.Exit.CORRIDOR);
+		assertEquals(room.getWest(), Chit.Exit.NONE);
 	}
 }

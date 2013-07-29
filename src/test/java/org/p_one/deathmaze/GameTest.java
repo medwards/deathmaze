@@ -61,10 +61,10 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);
 
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.north);
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.east);
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getNorth());
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getEast());
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getSouth());
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.getWest());
 	}
 
 	public void testMoveOffBoardDoesNotGiveImpossibleRooms() {
@@ -80,9 +80,9 @@ public class GameTest extends TestCase {
 		Chit.seed = new Long(2);
 		game.moveNorth();
 
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.north);
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.east);
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.getNorth());
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.getEast());
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getSouth());
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.getWest());
 	}
 }
