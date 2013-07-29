@@ -3,7 +3,20 @@ package org.p_one.deathmaze;
 import java.util.Random;
 
 public enum Chit {
-	THREE_WAY;
+	FOUR_WAY(Exit.DOOR, Exit.DOOR, Exit.DOOR, Exit.DOOR),
+	THREE_WAY(Exit.DOOR, Exit.DOOR, Exit.DOOR, Exit.NONE),
+	TWO_WAY_STRAIGHT(Exit.DOOR, Exit.NONE, Exit.DOOR, Exit.NONE),
+	TWO_WAY_TURN(Exit.DOOR, Exit.DOOR, Exit.NONE, Exit.NONE),
+	DEAD_END(Exit.DOOR, Exit.NONE, Exit.NONE, Exit.NONE);
+
+	public final Exit[] exits;
+
+	Chit(Exit ... exits) {
+		this.exits = new Exit[4];
+		for(int i = 0; i < 4; i++) {
+			this.exits[i] = exits[i];
+		}
+	}
 
 	public enum Exit {
 		NONE,
