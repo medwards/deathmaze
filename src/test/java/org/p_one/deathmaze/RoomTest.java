@@ -14,13 +14,13 @@ public class RoomTest extends TestCase {
 	}
 
 	public void testConstructRandom() {
-		Chit.Exit.seed = new Long(1);
+		Chit.seed = new Long(1);
 		Room room = new Room(0, 0);
 
-		assertEquals(room.north, Chit.Exit.DOOR);
-		assertEquals(room.east, Chit.Exit.NONE);
-		assertEquals(room.south, Chit.Exit.CORRIDOR);
-		assertEquals(room.west, Chit.Exit.DOOR);
+		assertEquals(Chit.Exit.DOOR, room.north);
+		assertEquals(Chit.Exit.NONE, room.east);
+		assertEquals(Chit.Exit.DOOR, room.south);
+		assertEquals(Chit.Exit.NONE, room.west);
 	}
 
 	public void testRotate() {

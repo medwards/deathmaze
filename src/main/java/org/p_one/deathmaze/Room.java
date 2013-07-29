@@ -7,7 +7,7 @@ public class Room {
 	public int x, y;
 
 	public Room(int x, int y) {
-		this(x, y, Chit.Exit.getRandom(), Chit.Exit.getRandom(), Chit.Exit.getRandom(), Chit.Exit.getRandom());
+		this(x, y, Chit.getRandom());
 	}
 
 	public Room(int x, int y, Chit chit) {

@@ -52,8 +52,8 @@ public class GameTest extends TestCase {
 		Game game = new Game();
 		game.map.add(new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
 
-		// should cause DOOR, DOOR, DOOR, NONE
-		Chit.Exit.seed = new Long(0);
+		// should cause Chit.TWO_WAY_STRAIGHT
+		Chit.seed = new Long(0);
 		game.moveNorth();
 
 		assertEquals(0, game.player_x);
@@ -62,22 +62,28 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);
 
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.north);
-		assertEquals(Chit.Exit.DOOR, game.roomToPlace.east);
+		// Note: the pre-rotation now baked into the test
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.north);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.east);
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
 	}
 
 	public void testMoveOffBoardDoesNotGiveImpossibleRooms() {
 		Game game = new Game();
-		game.map.add(new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.NONE, Chit.Exit.NONE, Chit.Exit.NONE));
+		// Make the only legal tile north of 0 a DEAD_END or TWO_WAY
+		game.map.add(new Room(0, 0, Chit.FOUR_WAY));
+		game.map.add(new Room(1, 0, Chit.FOUR_WAY));
+		game.map.add(new Room(-1, 0, Chit.FOUR_WAY));
+		game.map.add(new Room(1, -1, Chit.TWO_WAY_STRAIGHT));
+		game.map.add(new Room(-1, -1, Chit.TWO_WAY_STRAIGHT));
 
-		// a normal new Room with this seed chould cause NONE, CORR, NONE, CORR
-		Chit.Exit.seed = new Long(20);
+		// Should try FOUR_WAY and THREE_WAY first
+		Chit.seed = new Long(2);
 		game.moveNorth();
 
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.north);
-		assertEquals(Chit.Exit.CORRIDOR, game.roomToPlace.east);
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.north);
+		assertEquals(Chit.Exit.NONE, game.roomToPlace.east);
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.south);
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.west);
 	}
