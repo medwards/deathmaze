@@ -22,7 +22,7 @@ public class TerminalClient {
 
 	public TerminalClient() {
 		this.gameState = new Game();
-		Room aRoom = new Room(0, 0, true, true, true, true);
+		Room aRoom = new Room(0, 0, Room.Exit.DOOR, Room.Exit.DOOR, Room.Exit.DOOR, Room.Exit.DOOR);
 		this.gameState.map.add(aRoom);
 
 		this.screen = TerminalFacade.createScreen();
