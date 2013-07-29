@@ -133,11 +133,11 @@ public class TerminalClient {
 		}
 
 		if(size.getColumns() <= (cursor_x - this.x) * 5) {
-			this.x += 2;
+			this.x = cursor_x -2;
 		}
 
 		if(size.getRows() <= (cursor_y - this.y) * 5) {
-			this.y += 2;
+			this.y = cursor_y - 2;
 		}
 	}
 
