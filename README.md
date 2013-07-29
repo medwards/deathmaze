@@ -3,9 +3,11 @@ DEATHMAZE
 
 Instructions
 ------------
-Escape to quit. WASD to move the map, arrow keys to move the 'player'
-(position is indicated in yellow). Moving out of the maze produces an new
-room, Z rotates it, and spacebar will place the room.
+Arrow keys to move (position is indicated in yellow). Spacebar acts
+on objects in the room (currently just the dungeon entrance which quits).
+
+Moving out of the maze produces an new room. Z rotates the new room, and
+spacebar places the room.
 
 Credits
 -------

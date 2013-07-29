@@ -34,7 +34,7 @@ public class TerminalClient {
 	public void run() {
 		this.screen.startScreen();
 		Key key = null;
-		while(key == null || key.getKind() != Key.Kind.Escape) {
+		while(this.game.state != Game.State.QUIT) {
 			this.drawField(this.x, this.y);
 			key = this.screen.getTerminal().readInput();
 			if(key != null) {
@@ -99,7 +99,9 @@ public class TerminalClient {
 		} else if(this.game.roomToPlace != null && character == 'Z') {
 			this.game.roomToPlace.rotate();
 		} else if(character == ' ') {
-			if(this.game.roomToPlace != null) {
+			if(this.game.roomToPlace == null) {
+				this.game.action();
+			} else if(this.game.roomToPlace != null) {
 				if(this.game.map.validRoom(this.game.roomToPlace)) {
 					this.game.map.add(this.game.roomToPlace);
 					this.game.roomToPlace = null;
