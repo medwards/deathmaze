@@ -22,7 +22,7 @@ public class TerminalClient {
 
 	public TerminalClient() {
 		this.gameState = new Game();
-		Room aRoom = new Room(0, 0, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR, Chit.Exit.DOOR);
+		Room aRoom = new Room(0, 0, Chit.FOUR_WAY);
 		this.gameState.map.add(aRoom);
 
 		this.screen = TerminalFacade.createScreen();
@@ -161,28 +161,28 @@ public class TerminalClient {
 		this.writer.drawString(x + 1, y + 1, "   ");
 		this.writer.drawString(x + 1, y + 2, "   ");
 		this.writer.drawString(x + 1, y + 3, "   ");
-		if(room.north == Chit.Exit.DOOR) {
+		if(room.getNorth() == Chit.Exit.DOOR) {
 			this.writer.drawString(x + 2, y + 0, " ");
-		} else if(room.north == Chit.Exit.CORRIDOR) {
+		} else if(room.getNorth() == Chit.Exit.CORRIDOR) {
 			this.writer.drawString(x + 1, y + 0, "   ");
 		}
-		if(room.east == Chit.Exit.DOOR) {
+		if(room.getEast() == Chit.Exit.DOOR) {
 			this.writer.drawString(x + 4, y + 2, " ");
-		} else if(room.east == Chit.Exit.CORRIDOR) {
+		} else if(room.getEast() == Chit.Exit.CORRIDOR) {
 			this.writer.drawString(x + 4, y + 1, " ");
 			this.writer.drawString(x + 4, y + 2, " ");
 			this.writer.drawString(x + 4, y + 3, " ");
 		}
 
-		if(room.south == Chit.Exit.DOOR) {
+		if(room.getSouth() == Chit.Exit.DOOR) {
 			this.writer.drawString(x + 2, y + 4, " ");
-		} else if(room.south == Chit.Exit.CORRIDOR) {
+		} else if(room.getSouth() == Chit.Exit.CORRIDOR) {
 			this.writer.drawString(x + 1, y + 4, "   ");
 		}
 
-		if(room.west == Chit.Exit.DOOR) {
+		if(room.getWest() == Chit.Exit.DOOR) {
 			this.writer.drawString(x + 0, y + 2, " ");
-		} else if(room.west == Chit.Exit.CORRIDOR) {
+		} else if(room.getWest() == Chit.Exit.CORRIDOR) {
 			this.writer.drawString(x + 0, y + 1, " ");
 			this.writer.drawString(x + 0, y + 2, " ");
 			this.writer.drawString(x + 0, y + 3, " ");
