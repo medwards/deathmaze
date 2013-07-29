@@ -15,15 +15,15 @@ public class TerminalClient {
 		client.run();
 	}
 
-	private Game gameState;
+	private Game game;
 	public Screen screen;
 	public ScreenWriter writer;
 	public int x, y;
 
 	public TerminalClient() {
-		this.gameState = new Game();
+		this.game = new Game();
 		Room aRoom = new Room(0, 0, Chit.FOUR_WAY, true);
-		this.gameState.map.add(aRoom);
+		this.game.map.add(aRoom);
 
 		this.screen = TerminalFacade.createScreen();
 		this.writer = new ScreenWriter(screen);
@@ -48,18 +48,18 @@ public class TerminalClient {
 		this.screen.clear();
 		int x_offset = 0 - x;
 		int y_offset = 0 - y;
-		for(Room room : this.gameState.map.rooms) {
+		for(Room room : this.game.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
-			if(room.x == this.gameState.player_x && room.y == this.gameState.player_y) {
+			if(room.x == this.game.player_x && room.y == this.game.player_y) {
 				color = Terminal.Color.YELLOW;
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
 		}
-		this.drawPlayer(this.gameState, x_offset, y_offset, Terminal.Color.YELLOW);
-		if(this.gameState.roomToPlace != null) {
+		this.drawPlayer(this.game, x_offset, y_offset, Terminal.Color.YELLOW);
+		if(this.game.roomToPlace != null) {
 			this.drawHighlight(x_offset, y_offset);
-			Terminal.Color color = this.gameState.map.validRoom(this.gameState.roomToPlace) ? Terminal.Color.GREEN : Terminal.Color.RED;
-			this.drawRoom(this.gameState.roomToPlace, x_offset, y_offset, color);
+			Terminal.Color color = this.game.map.validRoom(this.game.roomToPlace) ? Terminal.Color.GREEN : Terminal.Color.RED;
+			this.drawRoom(this.game.roomToPlace, x_offset, y_offset, color);
 		}
 
 		this.screen.refresh();
@@ -69,23 +69,23 @@ public class TerminalClient {
 		char character = Character.toUpperCase(input.getCharacter());
 		Key.Kind kind = input.getKind();
 		if(kind == Key.Kind.ArrowDown) {
-			if(this.gameState.roomToPlace == null) {
-				this.gameState.moveSouth();
+			if(this.game.roomToPlace == null) {
+				this.game.moveSouth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowUp) {
-			if(this.gameState.roomToPlace == null) {
-				this.gameState.moveNorth();
+			if(this.game.roomToPlace == null) {
+				this.game.moveNorth();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowLeft) {
-			if(this.gameState.roomToPlace == null) {
-				this.gameState.moveWest();
+			if(this.game.roomToPlace == null) {
+				this.game.moveWest();
 			}
 			this.forceFieldToCursor();
 		} else if(kind == Key.Kind.ArrowRight) {
-			if(this.gameState.roomToPlace == null) {
-				this.gameState.moveEast();
+			if(this.game.roomToPlace == null) {
+				this.game.moveEast();
 			}
 			this.forceFieldToCursor();
 		} else if(character == 'A') {
@@ -96,15 +96,15 @@ public class TerminalClient {
 			this.y--;
 		} else if(character == 'S') {
 			this.y++;
-		} else if(this.gameState.roomToPlace != null && character == 'Z') {
-			this.gameState.roomToPlace.rotate();
+		} else if(this.game.roomToPlace != null && character == 'Z') {
+			this.game.roomToPlace.rotate();
 		} else if(character == ' ') {
-			if(this.gameState.roomToPlace != null) {
-				if(this.gameState.map.validRoom(this.gameState.roomToPlace)) {
-					this.gameState.map.add(this.gameState.roomToPlace);
-					this.gameState.roomToPlace = null;
+			if(this.game.roomToPlace != null) {
+				if(this.game.map.validRoom(this.game.roomToPlace)) {
+					this.game.map.add(this.game.roomToPlace);
+					this.game.roomToPlace = null;
 				} else {
-					this.gameState.roomToPlace = new Room(this.gameState.roomToPlace.x, this.gameState.roomToPlace.y);
+					this.game.roomToPlace = new Room(this.game.roomToPlace.x, this.game.roomToPlace.y);
 				}
 			}
 		}
@@ -112,12 +112,12 @@ public class TerminalClient {
 
 	private void forceFieldToCursor() {
 		int cursor_x = 0, cursor_y = 0;
-		if(this.gameState.roomToPlace != null) {
-			cursor_x = this.gameState.roomToPlace.x;
-			cursor_y = this.gameState.roomToPlace.y;
+		if(this.game.roomToPlace != null) {
+			cursor_x = this.game.roomToPlace.x;
+			cursor_y = this.game.roomToPlace.y;
 		} else {
-			cursor_x = this.gameState.player_x;
-			cursor_y = this.gameState.player_y;
+			cursor_x = this.game.player_x;
+			cursor_y = this.game.player_y;
 		}
 
 		int x_offset = 0 - this.x;
@@ -144,8 +144,8 @@ public class TerminalClient {
 	public void drawHighlight(int x_offset, int y_offset) {
 		this.writer.setBackgroundColor(Terminal.Color.MAGENTA);
 		int x, y;
-		x = (this.gameState.roomToPlace.x + x_offset) * 5;
-		y = (this.gameState.roomToPlace.y + y_offset) * 5;
+		x = (this.game.roomToPlace.x + x_offset) * 5;
+		y = (this.game.roomToPlace.y + y_offset) * 5;
 		this.writer.drawString(x, y, "     ");
 		this.writer.drawString(x, y + 1, "     ");
 		this.writer.drawString(x, y + 2, "     ");
