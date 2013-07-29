@@ -48,10 +48,12 @@ public class GameTest extends TestCase {
 		assertEquals(0, game.player_y);
 	}
 
-	public void testMoveOffBoard() {
+	public void testMoveOffBoardSwitchesToPlacement() {
 		Game game = new Game();
 		game.map.add(new Room(0, 0, Room.Exit.DOOR, Room.Exit.NONE, Room.Exit.NONE, Room.Exit.NONE));
 
+		// should cause DOOR, DOOR, DOOR, NONE
+		Room.Exit.seed = new Long(0);
 		game.moveNorth();
 
 		assertEquals(0, game.player_x);
@@ -59,5 +61,10 @@ public class GameTest extends TestCase {
 		assertNotNull(game.roomToPlace);
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);
+
+		assertEquals(Room.Exit.DOOR, game.roomToPlace.north);
+		assertEquals(Room.Exit.DOOR, game.roomToPlace.east);
+		assertEquals(Room.Exit.DOOR, game.roomToPlace.south);
+		assertEquals(Room.Exit.NONE, game.roomToPlace.west);
 	}
 }
