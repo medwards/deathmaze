@@ -12,12 +12,23 @@ public class RoomTest extends TestCase {
 		assertEquals(room.south, Room.Exit.NONE);
 		assertEquals(room.west, Room.Exit.NONE);
 	}
+
 	public void testConstructWithBooleans() {
 		Room room = new Room(0, 0, true, true, false, false);
 		assertEquals(room.north, Room.Exit.DOOR);
 		assertEquals(room.east, Room.Exit.DOOR);
 		assertEquals(room.south, Room.Exit.NONE);
 		assertEquals(room.west, Room.Exit.NONE);
+	}
+
+	public void testConstructRandom() {
+		Room.Exit.seed = new Long(1);
+		Room room = new Room(0, 0);
+
+		assertEquals(room.north, Room.Exit.DOOR);
+		assertEquals(room.east, Room.Exit.NONE);
+		assertEquals(room.south, Room.Exit.CORRIDOR);
+		assertEquals(room.west, Room.Exit.DOOR);
 	}
 
 	public void testRotate() {
