@@ -36,7 +36,25 @@ public class TerminalClient {
 		this.screen.startScreen();
 		Key key = null;
 		while(this.game.state != Game.State.QUIT) {
-			this.drawField(this.x, this.y);
+			if(Game.State.PLAYING == this.game.state) {
+				this.drawField(this.x, this.y);
+			} else if(Game.State.DEAD == this.game.state) {
+				this.screen.clear();
+				this.writer.setForegroundColor(Terminal.Color.RED);
+				this.writer.drawString(3, 3, "You died, stupid.");
+				this.screen.refresh();
+			} else if(Game.State.LOST == this.game.state) {
+				this.screen.clear();
+				this.writer.setForegroundColor(Terminal.Color.RED);
+				this.writer.drawString(3, 3, "You left the dungeon without any treasure, stupid.");
+				this.screen.refresh();
+			} else if(Game.State.WON == this.game.state) {
+				this.screen.clear();
+				this.writer.setForegroundColor(Terminal.Color.GREEN);
+				this.writer.drawString(3, 3, "You left the dungeon stupidly rich.");
+				this.screen.refresh();
+			}
+
 			key = this.screen.getTerminal().readInput();
 			if(key != null) {
 				this.handleInput(key);
