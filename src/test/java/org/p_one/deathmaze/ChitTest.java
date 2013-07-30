@@ -10,6 +10,6 @@ public class ChitTest extends TestCase {
 	public void testChitAtRandom() {
 		Chit.seed = new Long(0);
 		Chit chit = Chit.getRandom();
-		assertEquals(Chit.THREE_WAY, chit);
+		assertEquals(Chit.FOUR_WAY_FOUNTAIN, chit);
 	}
 }

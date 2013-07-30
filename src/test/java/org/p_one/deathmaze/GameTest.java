@@ -60,7 +60,7 @@ public class GameTest extends TestCase {
 		Game game = new Game();
 		game.map.add(new Room(0, 0, Chit.DEAD_END));
 
-		// should cause Chit.TWO_WAY_STRAIGHT
+		// should cause Chit.FOUR_WAY
 		Chit.seed = new Long(0);
 		game.moveNorth();
 
@@ -73,7 +73,7 @@ public class GameTest extends TestCase {
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getNorth());
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getEast());
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getSouth());
-		assertEquals(Chit.Exit.NONE, game.roomToPlace.getWest());
+		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getWest());
 	}
 
 	public void testMoveOffBoardDoesNotGiveImpossibleRooms() {
@@ -85,8 +85,8 @@ public class GameTest extends TestCase {
 		game.map.add(new Room(1, -1, Chit.TWO_WAY));
 		game.map.add(new Room(-1, -1, Chit.TWO_WAY));
 
-		// Should try FOUR_WAY and THREE_WAY first
-		Chit.seed = new Long(2);
+		// Should try FOUR_WAY and others first
+		Chit.seed = new Long(0);
 		game.moveNorth();
 
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.getNorth());

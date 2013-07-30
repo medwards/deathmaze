@@ -9,6 +9,15 @@ public enum Chit {
 	TWO_WAY_TURN(Exit.DOOR, Exit.DOOR, Exit.NONE, Exit.NONE),
 	DEAD_END(Exit.DOOR, Exit.NONE, Exit.NONE, Exit.NONE),
 
+	DEAD_END_FOUNTAIN(Feature.FOUNTAIN, DEAD_END),
+	TWO_WAY_FOUNTAIN(Feature.FOUNTAIN, TWO_WAY),
+	FOUR_WAY_FOUNTAIN(Feature.FOUNTAIN, FOUR_WAY),
+	DEAD_END_STATUE(Feature.STATUE, DEAD_END),
+	TWO_WAY_TURN_STATUE(Feature.STATUE, TWO_WAY_TURN),
+	DEAD_END_TRAPDOOR(Feature.TRAPDOOR, DEAD_END),
+	THREE_WAY_TRAPDOOR(Feature.TRAPDOOR, THREE_WAY),
+
+
 	// Not in original: FOUR_WAY_CORRIDOR(Exit.CORRIDOR, Exit.CORRIDOR, Exit.CORRIDOR, Exit.CORRIDOR),
 	// Not in original: THREE_WAY_CORRIDOR(Exit.CORRIDOR, Exit.CORRIDOR, Exit.CORRIDOR, Exit.NONE),
 	CORRIDOR(Exit.CORRIDOR, Exit.NONE, Exit.CORRIDOR, Exit.NONE),
@@ -22,13 +31,24 @@ public enum Chit {
 	CORRIDOR_TURN_WITH_DOOR2(Exit.CORRIDOR, Exit.CORRIDOR, Exit.DOOR, Exit.NONE);
 
 	public final Exit[] exits;
+	public final Feature feature;
 	public static Long seed = null;
 
 	Chit(Exit ... exits) {
+		this(Feature.NONE, exits);
+	}
+
+	Chit(Feature feature, Chit baseChit) {
+		this(feature, baseChit.exits);
+	}
+
+	Chit(Feature feature, Exit ... exits) {
 		this.exits = new Exit[4];
 		for(int i = 0; i < 4; i++) {
 			this.exits[i] = exits[i];
 		}
+
+		this.feature = feature;
 	}
 
 	public static Chit getRandom() {
@@ -46,5 +66,12 @@ public enum Chit {
 		NONE,
 		DOOR,
 		CORRIDOR;
+	}
+
+	public enum Feature {
+		NONE,
+		FOUNTAIN,
+		STATUE,
+		TRAPDOOR;
 	}
 }

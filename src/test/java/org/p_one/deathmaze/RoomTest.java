@@ -30,7 +30,7 @@ public class RoomTest extends TestCase {
 		assertEquals(Chit.Exit.DOOR, room.getNorth());
 		assertEquals(Chit.Exit.DOOR, room.getEast());
 		assertEquals(Chit.Exit.DOOR, room.getSouth());
-		assertEquals(Chit.Exit.NONE, room.getWest());
+		assertEquals(Chit.Exit.DOOR, room.getWest());
 	}
 
 	public void testRotate() {
