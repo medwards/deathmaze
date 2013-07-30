@@ -151,6 +151,17 @@ public class GameTest extends TestCase {
 		assertNull(game.roomToPlace);
 	}
 
+	public void testMonsters() {
+		Game game = new Game();
+
+		Map.Entry<Integer, Integer> monster;
+		monster = new AbstractMap.SimpleEntry<Integer, Integer>(0, 0);
+		game.monsters.add(monster);
+
+		assertEquals(monster, game.getMonster(0, 0));
+	}
+
+
 	public void testPlaceRoomProducesMonsters() {
 		Game game = new Game(new Long(1));
 		game.map.add(new Room(0, 0, Chit.DEAD_END));

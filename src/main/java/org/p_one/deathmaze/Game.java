@@ -35,6 +35,7 @@ public class Game {
 
 	public void action() {
 		Room current = this.map.getRoom(this.player_x, this.player_y);
+
 		if(current.isEntrance()) {
 			this.state = Game.State.QUIT;
 		} else if (Chit.Feature.NONE != current.getFeature()) {
@@ -130,6 +131,14 @@ public class Game {
 		this.monsters.add(new AbstractMap.SimpleEntry(x, y));
 	}
 
+	public Map.Entry<Integer, Integer> getMonster(int x, int y) {
+		for(Map.Entry<Integer, Integer> monster : this.monsters) {
+			if(monster.getKey() == x && monster.getValue() == y) {
+				return monster;
+			}
+		}
+		return null;
+	}
 
 	public enum State {
 		PLAYING,

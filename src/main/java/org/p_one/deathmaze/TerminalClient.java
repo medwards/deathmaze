@@ -58,12 +58,7 @@ public class TerminalClient {
 		}
 
 		for(Map.Entry<Integer, Integer> monster : this.game.monsters) {
-			this.writer.setForegroundColor(Terminal.Color.BLACK);
-			int monster_x = ((monster.getKey() + x_offset) * 5) + 2;
-			int monster_y = ((monster.getValue() + y_offset) * 5) + 2;
-
-			this.writer.drawString(monster_x, monster_y, "M");
-			this.writer.setForegroundColor(Terminal.Color.DEFAULT);
+			this.drawMonster(monster.getKey(), monster.getValue(), x_offset, y_offset);
 		}
 
 		this.drawPlayer(this.game, x_offset, y_offset, Terminal.Color.YELLOW);
@@ -214,6 +209,17 @@ public class TerminalClient {
 		}
 		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
 		this.writer.setForegroundColor(Terminal.Color.DEFAULT);
+	}
+
+	public void drawMonster(int monster_x, int monster_y, int x, int y) {
+		x = ((monster_x + x) * 5) + 2;
+		y = ((monster_y + y) * 5) + 2;
+
+		this.writer.setBackgroundColor(Terminal.Color.WHITE);
+		this.writer.setForegroundColor(Terminal.Color.BLACK);
+		this.writer.drawString(x, y, "M");
+		this.writer.setForegroundColor(Terminal.Color.DEFAULT);
+		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
 	}
 
 	public void drawPlayer(Game state, int x, int y, Terminal.Color color) {
