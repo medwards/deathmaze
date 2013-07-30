@@ -38,7 +38,12 @@ public class Game {
 
 		if(current.isEntrance()) {
 			this.state = Game.State.QUIT;
-		} else if (Chit.Feature.NONE != current.getFeature()) {
+		} else if(this.getMonster(current.x, current.y) != null) {
+			int dieResult = this.rollDice(2, 6) - 4;
+			if(dieResult < 6) {
+				this.state = Game.State.QUIT;
+			}
+		} else if(Chit.Feature.NONE != current.getFeature()) {
 			Chit.Feature feature = current.getFeature();
 			current.useFeature();
 
