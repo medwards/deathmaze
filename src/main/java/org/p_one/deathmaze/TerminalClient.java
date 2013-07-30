@@ -191,6 +191,14 @@ public class TerminalClient {
 			this.writer.drawString(x + 0, y + 3, " ");
 		}
 
+		if(room.getFeature() == Chit.Feature.FOUNTAIN) {
+		        this.writer.drawString(x + 2, y + 2, "F");
+		} else if(room.getFeature() == Chit.Feature.STATUE) {
+		        this.writer.drawString(x + 2, y + 2, "S");
+		} else if(room.getFeature() == Chit.Feature.TRAPDOOR) {
+		        this.writer.drawString(x + 2, y + 2, "D");
+		}
+
 		if(room.isEntrance()) {
 		        this.writer.drawString(x + 2, y + 2, "➚");
 		}
