@@ -23,6 +23,12 @@ public class RoomTest extends TestCase {
 		assertEquals(Chit.Exit.NONE, room.getWest());
 	}
 
+	public void testConstructWithFeature() {
+		Room room = new Room(0, 0, Chit.DEAD_END_FOUNTAIN);
+
+		assertEquals(Chit.Feature.FOUNTAIN, room.getFeature());
+	}
+
 	public void testConstructRandom() {
 		Chit.seed = new Long(0);
 		Room room = new Room(0, 0);

@@ -50,6 +50,10 @@ public class Room {
 		return this.entrance;
 	}
 
+	public Chit.Feature getFeature() {
+		return this.chit.feature;
+	}
+
 	public void rotate() {
 		int oldWEST = this.WEST;
 		this.WEST = this.SOUTH;
