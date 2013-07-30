@@ -71,6 +71,12 @@ public class Game {
 		this.move(0, 1);
 	}
 
+	public void placeRoom() {
+		if(this.roomToPlace != null) {
+			this.map.add(this.roomToPlace);
+			this.roomToPlace = null;
+		}
+	}
 
 	private void move(int x_delta, int y_delta) {
 		Room current = this.map.getRoom(this.player_x, this.player_y);

@@ -103,8 +103,7 @@ public class TerminalClient {
 				this.game.action();
 			} else if(this.game.roomToPlace != null) {
 				if(this.game.map.validRoom(this.game.roomToPlace)) {
-					this.game.map.add(this.game.roomToPlace);
-					this.game.roomToPlace = null;
+					this.game.placeRoom();
 				} else {
 					this.game.roomToPlace = new Room(this.game.roomToPlace.x, this.game.roomToPlace.y);
 				}

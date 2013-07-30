@@ -131,4 +131,18 @@ public class GameTest extends TestCase {
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getSouth());
 		assertEquals(Chit.Exit.NONE, game.roomToPlace.getWest());
 	}
+
+	public void testPlaceRoom() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
+
+		// should cause Chit.FOUR_WAY
+		Chit.seed = new Long(0);
+		game.moveNorth();
+		Room placeableRoom = game.roomToPlace;
+		game.placeRoom();
+
+		assertEquals(placeableRoom, game.map.rooms.get(1));
+		assertNull(game.roomToPlace);
+	}
 }
