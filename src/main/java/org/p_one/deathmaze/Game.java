@@ -22,6 +22,8 @@ public class Game {
 		Room current = this.map.getRoom(this.player_x, this.player_y);
 		if(current.isEntrance()) {
 			this.state = Game.State.QUIT;
+		} else if (Chit.Feature.NONE != current.getFeature()) {
+			current.useFeature();
 		}
 	}
 
