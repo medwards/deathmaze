@@ -8,6 +8,7 @@ public class Room {
 	private int NORTH, EAST, SOUTH, WEST; // kind of violating naming here
 
 	private boolean entrance;
+	private boolean used = false;
 
 	public Room(int x, int y) {
 		this(x, y, Chit.getRandom());
@@ -51,7 +52,14 @@ public class Room {
 	}
 
 	public Chit.Feature getFeature() {
+		if(this.used) {
+			return Chit.Feature.NONE;
+		}
 		return this.chit.feature;
+	}
+
+	public void useFeature() {
+		this.used = true;
 	}
 
 	public void rotate() {

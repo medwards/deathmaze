@@ -123,4 +123,11 @@ public class RoomTest extends TestCase {
 
 		assertEquals(Chit.Feature.FOUNTAIN, room.getFeature());
 	}
+
+	public void testUseFeature() {
+		Room room = new Room(0, 0, Chit.DEAD_END_FOUNTAIN);
+		room.useFeature();
+
+		assertEquals(Chit.Feature.NONE, room.getFeature());
+	}
 }
