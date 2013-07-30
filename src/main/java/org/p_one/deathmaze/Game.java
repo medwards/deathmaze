@@ -146,7 +146,10 @@ public class Game {
 	}
 
 	public enum State {
+		SETUP,
 		PLAYING,
+		DEAD,
+		WON,
 		QUIT;
 	}
 }

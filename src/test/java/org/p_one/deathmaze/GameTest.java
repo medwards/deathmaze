@@ -9,8 +9,9 @@ public class GameTest extends TestCase {
 	public void testStartingState() {
 		Game game = new Game();
 
-		assertEquals(game.player_x, 0);
-		assertEquals(game.player_y, 0);
+		assertEquals(Game.State.PLAYING, game.state);
+		assertEquals(0, game.player_x);
+		assertEquals(0, game.player_y);
 		assertNotNull(game.map);
 		assertNull(game.roomToPlace);
 		assertNotNull(game.monsters);
