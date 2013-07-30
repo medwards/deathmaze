@@ -22,16 +22,16 @@ public class GameTest extends TestCase {
 		Game game = new Game(new Long(0));
 	}
 
-	public void testLeaveDungeon() {
+	public void testActionLeaveDungeon() {
 		Game game = new Game();
 		game.map.add(new Room(0, 0, Chit.FOUR_WAY, true));
 
 		game.action();
 
-		assertEquals(Game.State.QUIT, game.state);
+		assertEquals(Game.State.LOST, game.state);
 	}
 
-	public void testInvestigateFountain() {
+	public void testActionInvestigateFountain() {
 		Game game = new Game(new Long(0));
 		Room room = new Room(0, 0, Chit.DEAD_END_FOUNTAIN);
 		game.map.add(room);
@@ -39,10 +39,10 @@ public class GameTest extends TestCase {
 		game.action();
 
 		assertEquals(Chit.Feature.NONE, room.getFeature());
-		assertEquals(Game.State.QUIT, game.state);
+		assertEquals(Game.State.DEAD, game.state);
 	}
 
-	public void testInvestigateStatue() {
+	public void testActionInvestigateStatue() {
 		Game game = new Game(new Long(0));
 		Room room = new Room(0, 0, Chit.DEAD_END_STATUE);
 		game.map.add(room);
@@ -50,10 +50,10 @@ public class GameTest extends TestCase {
 		game.action();
 
 		assertEquals(Chit.Feature.NONE, room.getFeature());
-		assertEquals(Game.State.QUIT, game.state);
+		assertEquals(Game.State.DEAD, game.state);
 	}
 
-	public void testInvestigateTrapdoor() {
+	public void testActionInvestigateTrapdoor() {
 		Game game = new Game(new Long(2));
 		Room room = new Room(0, 0, Chit.DEAD_END_TRAPDOOR);
 		game.map.add(room);
@@ -61,6 +61,26 @@ public class GameTest extends TestCase {
 		game.action();
 
 		assertEquals(Chit.Feature.NONE, room.getFeature());
+		assertEquals(Game.State.DEAD, game.state);
+	}
+
+	public void testActionNegotiate() {
+		Game game = new Game(new Long(0));
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
+		Map.Entry<Integer,Integer> monster_coord = new AbstractMap.SimpleEntry(0, 0);
+		game.monsters.add(monster_coord);
+
+		game.action();
+
+		assertEquals(Game.State.DEAD, game.state);
+	}
+
+	public void testActionQuit() {
+		Game game = new Game();
+		game.state = Game.State.DEAD;
+
+		game.action();
+
 		assertEquals(Game.State.QUIT, game.state);
 	}
 
