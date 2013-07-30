@@ -1,5 +1,6 @@
 package org.p_one.deathmaze;
 
+import java.util.Random;
 import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
 
@@ -8,13 +9,22 @@ public class Game {
 	public DungeonMap map;
 	public Room roomToPlace;
 	public State state;
+	private Random generator;
 
 	public Game() {
+		this(null);
+	}
+
+	public Game(Long seed) {
 		this.player_x = 0;
 		this.player_y = 0;
 
 		this.map = new DungeonMap();
 		this.roomToPlace = null;
+		this.generator = new Random();
+		if(seed != null) {
+			this.generator = new Random(seed.longValue());
+		}
 		this.state = State.PLAYING;
 	}
 
@@ -23,7 +33,25 @@ public class Game {
 		if(current.isEntrance()) {
 			this.state = Game.State.QUIT;
 		} else if (Chit.Feature.NONE != current.getFeature()) {
+			Chit.Feature feature = current.getFeature();
 			current.useFeature();
+
+			if(Chit.Feature.FOUNTAIN == feature) {
+				int dieResult = generator.nextInt(5) + 1;
+				if(dieResult == 1) {
+					this.state = Game.State.QUIT;
+				}
+			} else if(Chit.Feature.STATUE == feature) {
+				int dieResult = generator.nextInt(5) + 1;
+				if(dieResult == 1 || dieResult == 2) {
+					this.state = Game.State.QUIT;
+				}
+			} else if(Chit.Feature.TRAPDOOR == feature) {
+				int dieResult = generator.nextInt(5) + 1;
+				if(dieResult == 4 || dieResult == 5) {
+					this.state = Game.State.QUIT;
+				}
+			}
 		}
 	}
 

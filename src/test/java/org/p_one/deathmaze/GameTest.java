@@ -12,12 +12,49 @@ public class GameTest extends TestCase {
 		assertNull(game.roomToPlace);
 	}
 
+	public void testFixedSeed() {
+		Game game = new Game(new Long(0));
+	}
+
 	public void testLeaveDungeon() {
 		Game game = new Game();
 		game.map.add(new Room(0, 0, Chit.FOUR_WAY, true));
 
 		game.action();
 
+		assertEquals(Game.State.QUIT, game.state);
+	}
+
+	public void testInvestigateFountain() {
+		Game game = new Game(new Long(0));
+		Room room = new Room(0, 0, Chit.DEAD_END_FOUNTAIN);
+		game.map.add(room);
+
+		game.action();
+
+		assertEquals(Chit.Feature.NONE, room.getFeature());
+		assertEquals(Game.State.QUIT, game.state);
+	}
+
+	public void testInvestigateStatue() {
+		Game game = new Game(new Long(0));
+		Room room = new Room(0, 0, Chit.DEAD_END_STATUE);
+		game.map.add(room);
+
+		game.action();
+
+		assertEquals(Chit.Feature.NONE, room.getFeature());
+		assertEquals(Game.State.QUIT, game.state);
+	}
+
+	public void testInvestigateTrapdoor() {
+		Game game = new Game(new Long(2));
+		Room room = new Room(0, 0, Chit.DEAD_END_TRAPDOOR);
+		game.map.add(room);
+
+		game.action();
+
+		assertEquals(Chit.Feature.NONE, room.getFeature());
 		assertEquals(Game.State.QUIT, game.state);
 	}
 
