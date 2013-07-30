@@ -1,5 +1,6 @@
 package org.p_one.deathmaze;
 
+import java.util.Map;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenWriter;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -55,6 +56,16 @@ public class TerminalClient {
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
 		}
+
+		for(Map.Entry<Integer, Integer> monster : this.game.monsters) {
+			this.writer.setForegroundColor(Terminal.Color.BLACK);
+			int monster_x = ((monster.getKey() + x_offset) * 5) + 2;
+			int monster_y = ((monster.getValue() + y_offset) * 5) + 2;
+
+			this.writer.drawString(monster_x, monster_y, "M");
+			this.writer.setForegroundColor(Terminal.Color.DEFAULT);
+		}
+
 		this.drawPlayer(this.game, x_offset, y_offset, Terminal.Color.YELLOW);
 		if(this.game.roomToPlace != null) {
 			this.drawHighlight(x_offset, y_offset);

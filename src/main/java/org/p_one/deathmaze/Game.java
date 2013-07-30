@@ -1,12 +1,16 @@
 package org.p_one.deathmaze;
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.AbstractMap;
 import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
 
 public class Game {
 	public int player_x, player_y;
 	public DungeonMap map;
+	public ArrayList<Map.Entry<Integer, Integer>> monsters;
 	public Room roomToPlace;
 	public State state;
 	private Random generator;
@@ -21,6 +25,7 @@ public class Game {
 
 		this.map = new DungeonMap();
 		this.roomToPlace = null;
+		this.monsters = new ArrayList();
 		this.generator = new Random();
 		if(seed != null) {
 			this.generator = new Random(seed.longValue());
@@ -74,6 +79,7 @@ public class Game {
 	public void placeRoom() {
 		if(this.roomToPlace != null) {
 			this.map.add(this.roomToPlace);
+			this.monsters.add(new AbstractMap.SimpleEntry(this.roomToPlace.x, this.roomToPlace.y));
 			this.roomToPlace = null;
 		}
 	}

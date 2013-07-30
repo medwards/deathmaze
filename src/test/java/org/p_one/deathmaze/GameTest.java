@@ -2,6 +2,9 @@ package org.p_one.deathmaze;
 
 import junit.framework.TestCase;
 
+import java.util.Map;
+import java.util.AbstractMap;
+
 public class GameTest extends TestCase {
 	public void testStartingState() {
 		Game game = new Game();
@@ -10,6 +13,8 @@ public class GameTest extends TestCase {
 		assertEquals(game.player_y, 0);
 		assertNotNull(game.map);
 		assertNull(game.roomToPlace);
+		assertNotNull(game.monsters);
+		assertEquals(0, game.monsters.size());
 	}
 
 	public void testFixedSeed() {
@@ -144,5 +149,20 @@ public class GameTest extends TestCase {
 
 		assertEquals(placeableRoom, game.map.rooms.get(1));
 		assertNull(game.roomToPlace);
+	}
+
+	public void testPlaceRoomProducesMonsters() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
+
+		// should cause Chit.FOUR_WAY
+		Chit.seed = new Long(0);
+		game.moveNorth();
+		Room placeableRoom = game.roomToPlace;
+		game.placeRoom();
+
+		assertEquals(1, game.monsters.size());
+		Map.Entry<Integer,Integer> monster_coord = new AbstractMap.SimpleEntry(0,-1);
+		assertEquals(monster_coord, game.monsters.get(0));
 	}
 }
