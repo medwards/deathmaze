@@ -79,7 +79,9 @@ public class Game {
 	public void placeRoom() {
 		if(this.roomToPlace != null) {
 			this.map.add(this.roomToPlace);
-			this.monsters.add(new AbstractMap.SimpleEntry(this.roomToPlace.x, this.roomToPlace.y));
+			if(3 <= this.rollDice(1, 6)) {
+				this.addMonster(this.roomToPlace.x, this.roomToPlace.y);
+			}
 			this.roomToPlace = null;
 		}
 	}
@@ -95,6 +97,9 @@ public class Game {
 		} else if(current != null && proposed != null && current.connected(proposed)) {
 			this.player_x += x_delta;
 			this.player_y += y_delta;
+			if(1 == this.rollDice(1, 6)) {
+				this.addMonster(this.player_x, this.player_y);
+			}
 		}
 	}
 
@@ -120,6 +125,11 @@ public class Game {
 		}
 		return total;
 	}
+
+	private void addMonster(int x, int y) {
+		this.monsters.add(new AbstractMap.SimpleEntry(x, y));
+	}
+
 
 	public enum State {
 		PLAYING,

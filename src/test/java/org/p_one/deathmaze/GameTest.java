@@ -152,7 +152,7 @@ public class GameTest extends TestCase {
 	}
 
 	public void testPlaceRoomProducesMonsters() {
-		Game game = new Game();
+		Game game = new Game(new Long(1));
 		game.map.add(new Room(0, 0, Chit.DEAD_END));
 
 		// should cause Chit.FOUR_WAY
@@ -160,6 +160,18 @@ public class GameTest extends TestCase {
 		game.moveNorth();
 		Room placeableRoom = game.roomToPlace;
 		game.placeRoom();
+
+		assertEquals(1, game.monsters.size());
+		Map.Entry<Integer,Integer> monster_coord = new AbstractMap.SimpleEntry(0,-1);
+		assertEquals(monster_coord, game.monsters.get(0));
+	}
+
+	public void testPlacedRoomsProduceMonsters() {
+		Game game = new Game(new Long(0));
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
+		game.map.add(new Room(0, -1, Chit.FOUR_WAY));
+
+		game.moveNorth();
 
 		assertEquals(1, game.monsters.size());
 		Map.Entry<Integer,Integer> monster_coord = new AbstractMap.SimpleEntry(0,-1);
