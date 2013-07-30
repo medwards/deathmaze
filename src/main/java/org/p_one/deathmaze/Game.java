@@ -42,17 +42,17 @@ public class Game {
 			current.useFeature();
 
 			if(Chit.Feature.FOUNTAIN == feature) {
-				int dieResult = generator.nextInt(5) + 1;
+				int dieResult = this.rollDice(1, 6);
 				if(dieResult == 1) {
 					this.state = Game.State.QUIT;
 				}
 			} else if(Chit.Feature.STATUE == feature) {
-				int dieResult = generator.nextInt(5) + 1;
+				int dieResult = this.rollDice(1, 6);
 				if(dieResult == 1 || dieResult == 2) {
 					this.state = Game.State.QUIT;
 				}
 			} else if(Chit.Feature.TRAPDOOR == feature) {
-				int dieResult = generator.nextInt(5) + 1;
+				int dieResult = this.rollDice(1, 6);
 				if(dieResult == 4 || dieResult == 5) {
 					this.state = Game.State.QUIT;
 				}
@@ -111,6 +111,14 @@ public class Game {
 		}
 
 		return room;
+	}
+
+	private int rollDice(int number, int sides) {
+		int total = 0;
+		for(int i = number; i > 0; i--) {
+			total += this.generator.nextInt(sides) + 1;
+		}
+		return total;
 	}
 
 	public enum State {
