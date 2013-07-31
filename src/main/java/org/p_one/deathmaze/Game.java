@@ -96,6 +96,14 @@ public class Game {
 		}
 	}
 
+	public int rollDice(int number, int sides) {
+		int total = 0;
+		for(int i = number; i > 0; i--) {
+			total += this.generator.nextInt(sides) + 1;
+		}
+		return total;
+	}
+
 	private void move(int x_delta, int y_delta) {
 		Room current = this.map.getRoom(this.player_x, this.player_y);
 		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
@@ -126,14 +134,6 @@ public class Game {
 		}
 
 		return room;
-	}
-
-	private int rollDice(int number, int sides) {
-		int total = 0;
-		for(int i = number; i > 0; i--) {
-			total += this.generator.nextInt(sides) + 1;
-		}
-		return total;
 	}
 
 	private void addMonster(int x, int y) {

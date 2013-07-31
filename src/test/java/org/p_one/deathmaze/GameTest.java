@@ -209,4 +209,12 @@ public class GameTest extends TestCase {
 		Map.Entry<Integer,Integer> monster_coord = new AbstractMap.SimpleEntry(0,-1);
 		assertEquals(monster_coord, game.monsters.get(0));
 	}
+
+	public void testRollDice() {
+		Game game = new Game(new Long(0));
+
+		int result = game.rollDice(4, 3);
+
+		assertEquals(8, result);
+	}
 }
