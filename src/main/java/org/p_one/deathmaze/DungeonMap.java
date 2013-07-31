@@ -2,7 +2,6 @@ package org.p_one.deathmaze;
 
 import java.util.ArrayList;
 import org.p_one.deathmaze.Room;
-import org.p_one.deathmaze.InvalidRoomConnection;
 
 public class DungeonMap {
 	public ArrayList<Room> rooms;
