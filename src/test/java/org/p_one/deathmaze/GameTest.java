@@ -210,6 +210,14 @@ public class GameTest extends TestCase {
 		assertEquals(monster_coord, game.monsters.get(0));
 	}
 
+	public void testAddAndGetMonster() {
+		Game game = new Game(new Long(0));
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
+		game.addMonster(0, 0);
+
+		assertNotNull(game.getMonster(0, 0));
+	}
+
 	public void testRollDice() {
 		Game game = new Game(new Long(0));
 

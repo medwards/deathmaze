@@ -136,7 +136,7 @@ public class Game {
 		return room;
 	}
 
-	private void addMonster(int x, int y) {
+	public void addMonster(int x, int y) {
 		this.monsters.add(new AbstractMap.SimpleEntry(x, y));
 	}
 
