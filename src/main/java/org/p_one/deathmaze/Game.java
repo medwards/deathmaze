@@ -55,27 +55,19 @@ public class Game {
 			return;
 		}
 
+		action = new InvestigateStatueAction();
+		if(action.execute(this)) {
+			lastAction = action;
+			return;
+		}
 
-		if(Game.State.PLAYING == this.state) {
-			Room current = this.map.getRoom(this.player_x, this.player_y);
+		action = new InvestigateTrapdoorAction();
+		if(action.execute(this)) {
+			lastAction = action;
+			return;
+		}
 
-			if(Chit.Feature.NONE != current.getFeature()) {
-				Chit.Feature feature = current.getFeature();
-				current.useFeature();
-
-				if(Chit.Feature.STATUE == feature) {
-					int dieResult = this.rollDice(1, 6);
-					if(dieResult == 1 || dieResult == 2) {
-						this.state = Game.State.DEAD;
-					}
-				} else if(Chit.Feature.TRAPDOOR == feature) {
-					int dieResult = this.rollDice(1, 6);
-					if(dieResult == 4 || dieResult == 5) {
-						this.state = Game.State.DEAD;
-					}
-				}
-			}
-		} else if(Game.State.DEAD == this.state || Game.State.LOST == this.state || Game.State.WON == this.state) {
+		if(Game.State.DEAD == this.state || Game.State.LOST == this.state || Game.State.WON == this.state) {
 			this.state = Game.State.QUIT;
 		}
 	}
