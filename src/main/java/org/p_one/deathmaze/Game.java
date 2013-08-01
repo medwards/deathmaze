@@ -35,36 +35,13 @@ public class Game {
 	}
 
 	public void action() {
-		Action action;
+		Action[] actions = {new NegotiateAction(), new ExitAction(), new InvestigateFountainAction(), new InvestigateStatueAction(), new InvestigateTrapdoorAction()};
 
-		action = new NegotiateAction();
-		if(action.execute(this)) {
-			lastAction = action;
-			return;
-		}
-
-		action = new ExitAction();
-		if(action.execute(this)) {
-			lastAction = action;
-			return;
-		}
-
-		action = new InvestigateFountainAction();
-		if(action.execute(this)) {
-			lastAction = action;
-			return;
-		}
-
-		action = new InvestigateStatueAction();
-		if(action.execute(this)) {
-			lastAction = action;
-			return;
-		}
-
-		action = new InvestigateTrapdoorAction();
-		if(action.execute(this)) {
-			lastAction = action;
-			return;
+		for(Action action : actions) {
+			if(action.execute(this)) {
+				this.lastAction = action;
+				return;
+			}
 		}
 
 		if(Game.State.DEAD == this.state || Game.State.LOST == this.state || Game.State.WON == this.state) {
