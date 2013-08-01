@@ -41,12 +41,12 @@ public class TerminalClient {
 			} else if(Game.State.DEAD == this.game.state) {
 				this.screen.clear();
 				this.writer.setForegroundColor(Terminal.Color.RED);
-				this.writer.drawString(3, 3, "You died, stupid.");
+				this.writer.drawString(3, 3, "You died because of " + game.lastAction.getDescription() + ", stupid.");
 				this.screen.refresh();
 			} else if(Game.State.LOST == this.game.state) {
 				this.screen.clear();
 				this.writer.setForegroundColor(Terminal.Color.RED);
-				this.writer.drawString(3, 3, "You left the dungeon without any treasure, stupid.");
+				this.writer.drawString(3, 3, "You lost because you " + game.lastAction.getDescription() + ", stupid.");
 				this.screen.refresh();
 			} else if(Game.State.WON == this.game.state) {
 				this.screen.clear();

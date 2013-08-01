@@ -12,6 +12,7 @@ public class Game {
 	public DungeonMap map;
 	public ArrayList<Map.Entry<Integer, Integer>> monsters;
 	public Room roomToPlace;
+	public Action lastAction;
 	public State state;
 	private Random generator;
 
@@ -34,25 +35,35 @@ public class Game {
 	}
 
 	public void action() {
+		Action action;
+
+		action = new NegotiateAction();
+		if(action.execute(this)) {
+			lastAction = action;
+			return;
+		}
+
+		action = new ExitAction();
+		if(action.execute(this)) {
+			lastAction = action;
+			return;
+		}
+
+		action = new InvestigateFountainAction();
+		if(action.execute(this)) {
+			lastAction = action;
+			return;
+		}
+
+
 		if(Game.State.PLAYING == this.state) {
 			Room current = this.map.getRoom(this.player_x, this.player_y);
 
-			if(current.isEntrance()) {
-				Action action = new ExitAction();
-				boolean result = action.execute(this);
-			} else if(this.getMonster(current.x, current.y) != null) {
-				Action action = new NegotiateAction();
-				boolean result = action.execute(this);
-			} else if(Chit.Feature.NONE != current.getFeature()) {
+			if(Chit.Feature.NONE != current.getFeature()) {
 				Chit.Feature feature = current.getFeature();
 				current.useFeature();
 
-				if(Chit.Feature.FOUNTAIN == feature) {
-					int dieResult = this.rollDice(1, 6);
-					if(dieResult == 1) {
-						this.state = Game.State.DEAD;
-					}
-				} else if(Chit.Feature.STATUE == feature) {
+				if(Chit.Feature.STATUE == feature) {
 					int dieResult = this.rollDice(1, 6);
 					if(dieResult == 1 || dieResult == 2) {
 						this.state = Game.State.DEAD;
