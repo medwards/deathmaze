@@ -41,7 +41,7 @@ public class TerminalClient {
 			} else if(Game.State.DEAD == this.game.state) {
 				this.screen.clear();
 				this.writer.setForegroundColor(Terminal.Color.RED);
-				this.writer.drawString(3, 3, "You died because of " + game.lastAction.getDescription() + ", stupid.");
+				this.writer.drawString(3, 3, "You died because you " + game.lastAction.getDescription() + ", stupid.");
 				this.screen.refresh();
 			} else if(Game.State.LOST == this.game.state) {
 				this.screen.clear();
