@@ -38,7 +38,8 @@ public class Game {
 			Room current = this.map.getRoom(this.player_x, this.player_y);
 
 			if(current.isEntrance()) {
-				this.state = Game.State.LOST;
+				ExitAction action = new ExitAction();
+				action.execute(this);
 			} else if(this.getMonster(current.x, current.y) != null) {
 				int dieResult = this.rollDice(2, 6) - 4;
 				if(dieResult < 6) {
