@@ -7,7 +7,7 @@ public class ExitActionTest extends TestCase {
 		Game game = new Game();
 		Action action = new ExitAction();
 
-		action.execute(game);
+		boolean result = action.execute(game);
 
 		assertEquals(Game.State.LOST, game.state);
 	}

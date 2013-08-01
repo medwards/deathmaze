@@ -38,13 +38,11 @@ public class Game {
 			Room current = this.map.getRoom(this.player_x, this.player_y);
 
 			if(current.isEntrance()) {
-				ExitAction action = new ExitAction();
-				action.execute(this);
+				Action action = new ExitAction();
+				boolean result = action.execute(this);
 			} else if(this.getMonster(current.x, current.y) != null) {
-				int dieResult = this.rollDice(2, 6) - 4;
-				if(dieResult < 6) {
-					this.state = Game.State.DEAD;
-				}
+				Action action = new NegotiateAction();
+				boolean result = action.execute(this);
 			} else if(Chit.Feature.NONE != current.getFeature()) {
 				Chit.Feature feature = current.getFeature();
 				current.useFeature();

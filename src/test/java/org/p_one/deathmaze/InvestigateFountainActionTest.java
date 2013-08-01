@@ -11,7 +11,7 @@ public class InvestigateFountainActionTest extends TestCase {
 		game.map.add(room);
 		Action action = new InvestigateFountainAction();
 
-		action.execute(game);
+		boolean result = action.execute(game);
 
 		assertEquals(Chit.Feature.NONE, room.getFeature());
 		assertEquals(Game.State.DEAD, game.state);

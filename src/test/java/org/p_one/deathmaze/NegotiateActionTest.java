@@ -10,7 +10,7 @@ public class NegotiateActionTest extends TestCase {
 		game.addMonster(0, 0);
 		Action action = new NegotiateAction();
 
-		action.execute(game);
+		boolean result = action.execute(game);
 
 		assertEquals(Game.State.DEAD, game.state);
 	}
