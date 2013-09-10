@@ -4,7 +4,7 @@ public class ExitAction implements Action {
 	private String description = "left the dungeon";
 	public boolean execute(Game game) {
 		if(Game.State.PLAYING == game.state) {
-			Room current = game.map.getRoom(game.player_x, game.player_y);
+			Room current = game.map.getRoom(game.player.x, game.player.y);
 			if(current.isEntrance()) {
 				game.state = Game.State.LOST;
 				return true;

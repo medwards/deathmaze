@@ -8,7 +8,7 @@ import org.p_one.deathmaze.DungeonMap;
 import org.p_one.deathmaze.Room;
 
 public class Game {
-	public int player_x, player_y;
+	public Player player;
 	public DungeonMap map;
 	public ArrayList<Map.Entry<Integer, Integer>> monsters;
 	public Room roomToPlace;
@@ -21,8 +21,7 @@ public class Game {
 	}
 
 	public Game(Long seed) {
-		this.player_x = 0;
-		this.player_y = 0;
+		this.player = new Player();
 
 		this.map = new DungeonMap();
 		this.roomToPlace = null;
@@ -84,18 +83,18 @@ public class Game {
 	}
 
 	private void move(int x_delta, int y_delta) {
-		Room current = this.map.getRoom(this.player_x, this.player_y);
-		Room proposed = this.map.getRoom(this.player_x + x_delta, this.player_y + y_delta);
+		Room current = this.map.getRoom(this.player.x, this.player.y);
+		Room proposed = this.map.getRoom(this.player.x + x_delta, this.player.y + y_delta);
 
 		if(proposed == null && current.exit(x_delta, y_delta) != Chit.Exit.NONE) {
-			this.roomToPlace = this.makeNewRoom(this.player_x + x_delta, this.player_y + y_delta);
-			this.player_x += x_delta;
-			this.player_y += y_delta;
+			this.roomToPlace = this.makeNewRoom(this.player.x + x_delta, this.player.y + y_delta);
+			this.player.x += x_delta;
+			this.player.y += y_delta;
 		} else if(current != null && proposed != null && current.connected(proposed)) {
-			this.player_x += x_delta;
-			this.player_y += y_delta;
+			this.player.x += x_delta;
+			this.player.y += y_delta;
 			if(1 == this.rollDice(1, 6)) {
-				this.addMonster(this.player_x, this.player_y);
+				this.addMonster(this.player.x, this.player.y);
 			}
 		}
 	}

@@ -10,8 +10,8 @@ public class GameTest extends TestCase {
 		Game game = new Game();
 
 		assertEquals(Game.State.PLAYING, game.state);
-		assertEquals(0, game.player_x);
-		assertEquals(0, game.player_y);
+		assertEquals(0, game.player.x);
+		assertEquals(0, game.player.y);
 		assertNotNull(game.map);
 		assertNull(game.roomToPlace);
 		assertNotNull(game.monsters);
@@ -91,20 +91,20 @@ public class GameTest extends TestCase {
 		game.map.add(new Room(0, 1, Chit.CORRIDOR_TURN));
 
 		game.moveSouth();
-		assertEquals(0, game.player_x);
-		assertEquals(1, game.player_y);
+		assertEquals(0, game.player.x);
+		assertEquals(1, game.player.y);
 
 		game.moveNorth();
-		assertEquals(0, game.player_x);
-		assertEquals(0, game.player_y);
+		assertEquals(0, game.player.x);
+		assertEquals(0, game.player.y);
 
 		game.moveWest();
-		assertEquals(-1, game.player_x);
-		assertEquals(0, game.player_y);
+		assertEquals(-1, game.player.x);
+		assertEquals(0, game.player.y);
 
 		game.moveEast();
-		assertEquals(0, game.player_x);
-		assertEquals(0, game.player_y);
+		assertEquals(0, game.player.x);
+		assertEquals(0, game.player.y);
 	}
 
 	public void testMoveBlocked() {
@@ -115,8 +115,8 @@ public class GameTest extends TestCase {
 		game.moveSouth();
 		game.moveWest();
 
-		assertEquals(0, game.player_x);
-		assertEquals(0, game.player_y);
+		assertEquals(0, game.player.x);
+		assertEquals(0, game.player.y);
 	}
 
 	public void testMoveOffBoardSwitchesToPlacement() {
@@ -127,8 +127,8 @@ public class GameTest extends TestCase {
 		Chit.seed = new Long(0);
 		game.moveNorth();
 
-		assertEquals(0, game.player_x);
-		assertEquals(-1, game.player_y);
+		assertEquals(0, game.player.x);
+		assertEquals(-1, game.player.y);
 		assertNotNull(game.roomToPlace);
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);

@@ -4,7 +4,7 @@ public class InvestigateTrapdoorAction implements Action {
 	private String description = "investigated a trap door";
 	public boolean execute(Game game) {
 		if(Game.State.PLAYING == game.state) {
-			Room current = game.map.getRoom(game.player_x, game.player_y);
+			Room current = game.map.getRoom(game.player.x, game.player.y);
 			Chit.Feature feature = current.getFeature();
 			if(Chit.Feature.TRAPDOOR == feature) {
 				current.useFeature();

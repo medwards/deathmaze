@@ -4,7 +4,7 @@ public class InvestigateStatueAction implements Action {
 	private String description = "investigated a statue";
 	public boolean execute(Game game) {
 		if(Game.State.PLAYING == game.state) {
-			Room current = game.map.getRoom(game.player_x, game.player_y);
+			Room current = game.map.getRoom(game.player.x, game.player.y);
 			Chit.Feature feature = current.getFeature();
 			if(Chit.Feature.STATUE == feature) {
 				current.useFeature();

@@ -69,7 +69,7 @@ public class TerminalClient {
 		int y_offset = 0 - y;
 		for(Room room : this.game.map.rooms) {
 			Terminal.Color color = Terminal.Color.WHITE;
-			if(room.x == this.game.player_x && room.y == this.game.player_y) {
+			if(room.x == this.game.player.x && room.y == this.game.player.y) {
 				color = Terminal.Color.YELLOW;
 			}
 			this.drawRoom(room, x_offset, y_offset, color);
@@ -141,8 +141,8 @@ public class TerminalClient {
 			cursor_x = this.game.roomToPlace.x;
 			cursor_y = this.game.roomToPlace.y;
 		} else {
-			cursor_x = this.game.player_x;
-			cursor_y = this.game.player_y;
+			cursor_x = this.game.player.x;
+			cursor_y = this.game.player.y;
 		}
 
 		int x_offset = 0 - this.x;
@@ -241,8 +241,8 @@ public class TerminalClient {
 	}
 
 	public void drawPlayer(Game state, int x, int y, Terminal.Color color) {
-		x = ((state.player_x + x) * 5) + 2;
-		y = ((state.player_y + y) * 5) + 2;
+		x = ((state.player.x + x) * 5) + 2;
+		y = ((state.player.y + y) * 5) + 2;
 		this.writer.setBackgroundColor(color);
 		this.writer.drawString(x, y, "⍟");
 		this.writer.setBackgroundColor(Terminal.Color.DEFAULT);
