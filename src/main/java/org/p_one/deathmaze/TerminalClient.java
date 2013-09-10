@@ -7,8 +7,6 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalSize;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
-import org.p_one.deathmaze.DungeonMap;
-import org.p_one.deathmaze.Room;
 
 public class TerminalClient {
 	public static void main(String[] args) {

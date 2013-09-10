@@ -2,8 +2,6 @@ package org.p_one.deathmaze;
 
 import junit.framework.TestCase;
 
-import org.p_one.deathmaze.InvestigateFountainAction;
-
 public class InvestigateFountainActionTest extends TestCase {
 	public void testInvestigateFountain() {
 		Game game = new Game(new Long(0));

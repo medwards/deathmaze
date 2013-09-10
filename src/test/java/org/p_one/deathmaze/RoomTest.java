@@ -2,8 +2,6 @@ package org.p_one.deathmaze;
 
 import junit.framework.TestCase;
 
-import org.p_one.deathmaze.Room;
-
 public class RoomTest extends TestCase {
 	public void testConstruct() {
 		Room room = new Room(0, 0, Chit.CORRIDOR_WITH_DOOR, true);

@@ -4,8 +4,6 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.AbstractMap;
-import org.p_one.deathmaze.DungeonMap;
-import org.p_one.deathmaze.Room;
 
 public class Game {
 	public Player player;
