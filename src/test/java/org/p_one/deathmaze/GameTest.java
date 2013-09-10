@@ -127,8 +127,6 @@ public class GameTest extends TestCase {
 		Chit.seed = new Long(0);
 		game.moveNorth();
 
-		assertEquals(0, game.player.x);
-		assertEquals(-1, game.player.y);
 		assertNotNull(game.roomToPlace);
 		assertEquals(0, game.roomToPlace.x);
 		assertEquals(-1, game.roomToPlace.y);
@@ -137,6 +135,18 @@ public class GameTest extends TestCase {
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getEast());
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getSouth());
 		assertEquals(Chit.Exit.DOOR, game.roomToPlace.getWest());
+	}
+
+	public void testMoveOffBoardDoesNotMovePlayer() {
+		Game game = new Game();
+		game.map.add(new Room(0, 0, Chit.DEAD_END));
+
+		// should cause Chit.FOUR_WAY
+		Chit.seed = new Long(0);
+		game.moveNorth();
+
+		assertEquals(0, game.player.x);
+		assertEquals(0, game.player.y);
 	}
 
 	public void testMoveOffBoardDoesNotGiveImpossibleRooms() {
@@ -170,6 +180,8 @@ public class GameTest extends TestCase {
 
 		assertEquals(placeableRoom, game.map.rooms.get(1));
 		assertNull(game.roomToPlace);
+		assertEquals(0, game.player.x);
+		assertEquals(-1, game.player.y);
 	}
 
 	public void testMonsters() {

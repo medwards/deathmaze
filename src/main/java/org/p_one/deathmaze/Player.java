@@ -7,4 +7,9 @@ public class Player {
 		this.x = 0;
 		this.y = 0;
 	}
+
+	public void move(Room target) {
+		this.x = target.x;
+		this.y = target.y;
+	}
 }

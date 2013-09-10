@@ -70,6 +70,7 @@ public class Game {
 			if(3 <= this.rollDice(1, 6)) {
 				this.addMonster(this.roomToPlace.x, this.roomToPlace.y);
 			}
+			this.player.move(this.roomToPlace);
 			this.roomToPlace = null;
 		}
 	}
@@ -88,11 +89,8 @@ public class Game {
 
 		if(proposed == null && current.exit(x_delta, y_delta) != Chit.Exit.NONE) {
 			this.roomToPlace = this.makeNewRoom(this.player.x + x_delta, this.player.y + y_delta);
-			this.player.x += x_delta;
-			this.player.y += y_delta;
 		} else if(current != null && proposed != null && current.connected(proposed)) {
-			this.player.x += x_delta;
-			this.player.y += y_delta;
+			this.player.move(proposed);
 			if(1 == this.rollDice(1, 6)) {
 				this.addMonster(this.player.x, this.player.y);
 			}
