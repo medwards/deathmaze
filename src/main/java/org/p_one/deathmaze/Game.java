@@ -49,19 +49,19 @@ public class Game {
 	}
 
 	public void moveNorth() {
-		this.move(0, -1);
+		this.move(this.player.x, this.player.y - 1);
 	}
 
 	public void moveEast() {
-		this.move(1,0);
+		this.move(this.player.x + 1, this.player.y);
 	}
 
 	public void moveWest() {
-		this.move(-1, 0);
+		this.move(this.player.x - 1, this.player.y);
 	}
 
 	public void moveSouth() {
-		this.move(0, 1);
+		this.move(this.player.x, this.player.y + 1);
 	}
 
 	public void placeRoom() {
@@ -83,12 +83,14 @@ public class Game {
 		return total;
 	}
 
-	private void move(int x_delta, int y_delta) {
+	private void move(int targetX, int targetY) {
+		int x_delta = targetX - this.player.x;
+		int y_delta = targetY - this.player.y;
 		Room current = this.map.getRoom(this.player.x, this.player.y);
-		Room proposed = this.map.getRoom(this.player.x + x_delta, this.player.y + y_delta);
+		Room proposed = this.map.getRoom(targetX, targetY);
 
 		if(proposed == null && current.exit(x_delta, y_delta) != Chit.Exit.NONE) {
-			this.roomToPlace = this.makeNewRoom(this.player.x + x_delta, this.player.y + y_delta);
+			this.roomToPlace = this.makeNewRoom(targetX, targetY);
 		} else if(current != null && proposed != null && current.connected(proposed)) {
 			this.player.move(proposed);
 			if(1 == this.rollDice(1, 6)) {
