@@ -39,4 +39,19 @@ public class DungeonMap {
 		}
 		return null;
 	}
+
+	public Room makeNewRoom(int x, int y) {
+		Room room = new Room(x, y);
+		while(!this.validRoom(room)) {
+			for(int i = 0; i < 4; i++) {
+				if(this.validRoom(room)) {
+					return room;
+				}
+				room.rotate();
+			}
+			room = new Room(x, y);
+		}
+
+		return room;
+	}
 }

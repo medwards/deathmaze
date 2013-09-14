@@ -88,28 +88,13 @@ public class Game {
 		Room proposed = this.map.getRoom(targetX, targetY);
 
 		if(proposed == null && current.exit(x_delta, y_delta) != Chit.Exit.NONE) {
-			this.roomToPlace = this.makeNewRoom(targetX, targetY);
+			this.roomToPlace = this.map.makeNewRoom(targetX, targetY);
 		} else if(current != null && proposed != null && current.connected(proposed)) {
 			this.player.move(proposed);
 			if(1 == this.rollDice(1, 6)) {
 				this.addMonster(this.player.x, this.player.y);
 			}
 		}
-	}
-
-	private Room makeNewRoom(int x, int y) {
-		Room room = new Room(x, y);
-		while(!this.map.validRoom(room)) {
-			for(int i = 0; i < 4; i++) {
-				if(this.map.validRoom(room)) {
-					return room;
-				}
-				room.rotate();
-			}
-			room = new Room(x, y);
-		}
-
-		return room;
 	}
 
 	public void addMonster(int x, int y) {

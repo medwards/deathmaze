@@ -81,4 +81,34 @@ public class DungeonMapTest extends TestCase {
 
 		assertEquals(map.getRoom(0, 0), room);
 	}
+
+	public void testMakesNewRandomRoom() {
+		DungeonMap map = new DungeonMap();
+		Chit.seed = new Long(0); // Should produce FOUR_WAY next
+		Room newRoom = map.makeNewRoom(0, 0);
+
+		assertEquals(Chit.Exit.DOOR, newRoom.getNorth());
+		assertEquals(Chit.Exit.DOOR, newRoom.getEast());
+		assertEquals(Chit.Exit.DOOR, newRoom.getSouth());
+		assertEquals(Chit.Exit.DOOR, newRoom.getWest());
+	}
+
+	public void testMakeNewRoomGivesValidRoom() {
+		DungeonMap map = new DungeonMap();
+		// Make the only legal tile @ 0, -1 a DEAD_END or TWO_WAY
+		map.add(new Room(0, 0, Chit.FOUR_WAY));
+		map.add(new Room(1, 0, Chit.FOUR_WAY));
+		map.add(new Room(-1, 0, Chit.FOUR_WAY));
+		map.add(new Room(1, -1, Chit.TWO_WAY));
+		map.add(new Room(-1, -1, Chit.TWO_WAY));
+
+		// Should try FOUR_WAY and others first
+		Chit.seed = new Long(0);
+		Room newRoom = map.makeNewRoom(0, -1);
+
+		assertEquals(Chit.Exit.NONE, newRoom.getNorth());
+		assertEquals(Chit.Exit.NONE, newRoom.getEast());
+		assertEquals(Chit.Exit.DOOR, newRoom.getSouth());
+		assertEquals(Chit.Exit.NONE, newRoom.getWest());
+	}
 }
