@@ -18,4 +18,14 @@ public class PlayerTest extends TestCase {
 		assertEquals(5, player.x);
 		assertEquals(2, player.y);
 	}
+
+	public void testPlayerHasStartingHealth() {
+		Player player = new Player();
+		assertEquals(20, player.health);
+	}
+
+	public void testPlayerHasNoStartingGold() {
+		Player player = new Player();
+		assertEquals(0, player.gold);
+	}
 }
